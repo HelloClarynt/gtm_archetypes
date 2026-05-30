@@ -92,9 +92,9 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   max-width: var(--max-width);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 32px;
+  gap: 20px;
 }
 
 .brand {
@@ -111,7 +111,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   color: var(--ink);
 }
 .brand-logo .accent { color: var(--marigold); }
-.brand-logo .term { color: var(--rose); }
+.brand-logo .term { color: var(--ink); }
 
 .brand-divider {
   width: 1px;
@@ -176,11 +176,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .tab.disabled {
   color: var(--ink-faint);
   cursor: not-allowed;
-}
-.tab.disabled::after {
-  content: " · soon";
-  font-weight: 400;
-  font-size: 10px;
 }
 
 .view-toggle {
