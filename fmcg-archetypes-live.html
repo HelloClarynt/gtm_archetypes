@@ -3681,8 +3681,21 @@ function syncClientRowToState(row) {
   if (idx >= 0) Object.assign(list[idx], data);
 }
 
+// Per-row save chain. Without this, fast typing fires multiple
+// `insert_client` calls before the first one returns a UUID, producing
+// duplicate rows. By chaining, the second save awaits the first; by
+// then `dataset.cid` is set and it goes through `update_client`.
+const _clientSaveChain = new WeakMap();
+
 // Persist a single client row to the server (insert if new, update otherwise)
-async function persistClientRow(row) {
+function persistClientRow(row) {
+  const prev = _clientSaveChain.get(row) || Promise.resolve();
+  const next = prev.catch(() => {}).then(() => _persistClientRowInner(row));
+  _clientSaveChain.set(row, next);
+  return next;
+}
+
+async function _persistClientRowInner(row) {
   if (!CURRENT_DRAWER_ID) return;
   const cid = row.dataset.cid;
   const tmpId = row.dataset.tmp;
