@@ -91,8 +91,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .header-inner {
   max-width: var(--max-width);
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  display: flex;
   align-items: center;
   gap: 20px;
 }
@@ -100,7 +99,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .brand {
   display: flex;
   align-items: baseline;
-  gap: 16px;
+  flex-shrink: 0;
 }
 
 .brand-logo {
@@ -113,91 +112,89 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .brand-logo .accent { color: var(--marigold); }
 .brand-logo .term { color: var(--ink); }
 
-.brand-divider {
-  width: 1px;
-  height: 18px;
-  background: var(--rule);
-  align-self: center;
+/* Sector selector — replaces the old horizontal sector-tabs strip.
+   Native <select> styled to match the rest of the chrome. */
+.sector-select {
+  position: relative;
+  flex-shrink: 0;
 }
-
-.brand-context {
+.sector-select select {
+  appearance: none;
+  -webkit-appearance: none;
   font-family: var(--font-body);
   font-size: 12px;
-  color: var(--ink-muted);
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 8px 32px 8px 14px;
+  cursor: pointer;
+  min-width: 120px;
+}
+.sector-select select:hover { border-color: var(--ink-faint); }
+.sector-select select:focus { outline: none; border-color: var(--marigold); }
+.sector-select::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid var(--ink-soft);
+  border-bottom: 1.5px solid var(--ink-soft);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
 }
 
-.sector-tabs {
+/* Four-button nav cluster — Right to Win, Archetype Grids, Client
+   Mappings, Edit Session. Equal-width via flex:1 within a fixed group
+   width so they stay consistent regardless of label length. */
+.view-nav {
   display: flex;
-  gap: 4px;
-  justify-self: center;
-  align-items: center;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 600px;
+  max-width: 60vw;
 }
-
-.tabs-divider {
-  width: 1px;
-  height: 18px;
-  background: var(--rule);
-  margin: 0 12px;
-}
-
-.tab-rtw {
+.nav-btn {
+  flex: 1 1 0;
+  padding: 9px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  background: var(--card);
+  border-right: 1px solid var(--rule);
+  transition: background 150ms, color 150ms;
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
 }
-.tab-rtw::before {
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: var(--card-soft); }
+.nav-btn.active {
+  background: var(--ink);
+  color: var(--canvas);
+}
+.nav-btn.nav-rtw::before {
   content: "";
   width: 6px;
   height: 6px;
   background: var(--rose);
   border-radius: 50%;
   display: inline-block;
+  flex-shrink: 0;
 }
-
-.tab {
-  padding: 8px 16px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  border-bottom: 2px solid transparent;
-  transition: color 180ms, border-color 180ms;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.tab:hover { color: var(--ink-soft); }
-.tab.active {
-  color: var(--ink);
-  border-bottom-color: var(--marigold);
-}
-.tab.disabled {
-  color: var(--ink-faint);
+.nav-btn:disabled, .nav-btn[aria-disabled="true"] {
+  opacity: 0.4;
   cursor: not-allowed;
-}
-
-.view-toggle {
-  display: flex;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.view-btn {
-  padding: 8px 14px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ink-soft);
-  background: var(--card);
-  border-right: 1px solid var(--rule);
-  transition: background 150ms;
-}
-.view-btn:last-child { border-right: none; }
-.view-btn:hover { background: var(--card-soft); }
-.view-btn.active {
-  background: var(--ink);
-  color: var(--canvas);
 }
 
 /* ============================================================
@@ -1398,18 +1395,11 @@ body.rtw-mode .filter-bar {
   display: none;
 }
 
-body.rtw-mode .sector-tabs .tab:not(.tab-rtw) {
+/* In RTW mode the three archetype-view buttons dim — RTW is the only
+   relevant destination. They stay clickable to allow exit. */
+body.rtw-mode .nav-btn:not(.nav-rtw):not(.active) {
   opacity: 0.45;
 }
-body.rtw-mode .sector-tabs .tab:not(.tab-rtw).active {
-  color: var(--ink-muted);
-  border-bottom-color: transparent;
-}
-body.rtw-mode .sector-tabs .tab-rtw {
-  color: var(--ink);
-  border-bottom-color: var(--rose);
-}
-body.rtw-mode .view-toggle { visibility: hidden; }
 
 .rtw-view {
   max-width: var(--max-width);
@@ -1831,21 +1821,24 @@ body.rtw-mode .view-toggle { visibility: hidden; }
 .conn-indicator {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 5px 11px;
+  gap: 6px;
+  padding: 4px 10px;
   font-size: 11px;
-  letter-spacing: 0.04em;
-  color: var(--ink-muted);
-  background: var(--card);
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  background: transparent;
   border: 1px solid var(--rule);
   border-radius: 999px;
   white-space: nowrap;
+  flex-shrink: 0;
+  cursor: default;
 }
 .conn-indicator .dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   display: inline-block;
+  flex-shrink: 0;
 }
 .conn-indicator[data-state="connecting"] .dot {
   background: var(--marigold);
@@ -1870,18 +1863,6 @@ body.rtw-mode .view-toggle { visibility: hidden; }
   font-weight: 600;
   color: var(--ink);
 }
-.conn-sep {
-  width: 1px;
-  height: 10px;
-  background: var(--rule);
-  display: inline-block;
-}
-
-/* Make the brand row a bit more flexible so the indicator fits */
-.brand {
-  flex-wrap: wrap;
-  row-gap: 6px;
-}
 
 /* ============================================================
    RESPONSIVE
@@ -1894,9 +1875,9 @@ body.rtw-mode .view-toggle { visibility: hidden; }
 @media (max-width: 900px) {
   .archetype-grid { grid-template-columns: repeat(2, 1fr); }
   .module-grid    { grid-template-columns: 1fr; }
-  .header-inner { grid-template-columns: 1fr; gap: 16px; }
-  .sector-tabs { justify-self: start; flex-wrap: wrap; }
-  .view-toggle { justify-self: start; }
+  .header-inner { flex-wrap: wrap; gap: 12px; }
+  .view-nav { width: 100%; max-width: none; order: 3; }
+  .conn-indicator { order: 2; margin-left: auto; }
   .intro-title { font-size: 32px; }
   .mappings-row { grid-template-columns: 1fr; gap: 8px; }
   .drawer { width: 100vw; }
@@ -1947,29 +1928,25 @@ body.rtw-mode .view-toggle { visibility: hidden; }
   <div class="header-inner">
     <div class="brand">
       <span class="brand-logo">Clary<span class="accent">nt</span><span class="term">_</span></span>
-      <span class="brand-divider"></span>
-      <span class="brand-context">× PwC · Archetype Framework</span>
-      <span class="brand-divider"></span>
-      <span class="conn-indicator" id="conn-indicator" data-state="connecting" title="Connection to workspace">
-        <span class="dot"></span>
-        <span id="conn-text">connecting…</span>
-        <span class="conn-sep" id="conn-sep" style="display:none"></span>
-        <span class="conn-user" id="conn-user" style="display:none"></span>
-      </span>
     </div>
-    <nav class="sector-tabs">
-      <button class="tab active" data-sector="fmcg">FMCG</button>
-      <button class="tab disabled" disabled>Durables</button>
-      <button class="tab disabled" disabled>OTC / Consumer Health</button>
-      <button class="tab disabled" disabled>Retail</button>
-      <span class="tabs-divider"></span>
-      <button class="tab tab-rtw" data-sector="rtw">Right to Win</button>
+    <div class="sector-select">
+      <select id="sector-dropdown" aria-label="Sector">
+        <option value="fmcg" selected>FMCG</option>
+        <option value="durables" disabled>Durables</option>
+        <option value="otc" disabled>OTC / Consumer Health</option>
+        <option value="retail" disabled>Retail</option>
+      </select>
+    </div>
+    <nav class="view-nav" role="tablist">
+      <button class="nav-btn nav-rtw" data-view="rtw">Right to Win</button>
+      <button class="nav-btn active" data-view="grid">Archetype Grids</button>
+      <button class="nav-btn" data-view="mappings">Client Mappings</button>
+      <button class="nav-btn" data-view="session">Edit Session</button>
     </nav>
-    <div class="view-toggle">
-      <button class="view-btn active" data-view="grid">Grid</button>
-      <button class="view-btn" data-view="mappings">Mappings</button>
-      <button class="view-btn" data-view="session">Session</button>
-    </div>
+    <span class="conn-indicator" id="conn-indicator" data-state="connecting" title="Connecting…">
+      <span class="dot"></span>
+      <span class="conn-user" id="conn-user"></span>
+    </span>
   </div>
 </header>
 
@@ -1981,7 +1958,7 @@ body.rtw-mode .view-toggle { visibility: hidden; }
   </div>
   <div class="intro-meta">
     <strong>Working artifact</strong><br>
-    Q2 FY27 · v0.1<br>
+    Q2 FY27 · V1<br>
     Clarynt · PwC
   </div>
 </div>
@@ -2836,26 +2813,28 @@ function applyServerData(serverData) {
 }
 
 // ---- Connection state UI ----
+// Compact: dot + user name. Full status (live / connecting / offline,
+// and "synced N ago") lives in the tooltip so the persistent label
+// stays calm and doesn't flicker every 3s.
 function setConnectionState(state) {
   CONNECTION_STATE = state;
   const ind = document.getElementById("conn-indicator");
-  const txt = document.getElementById("conn-text");
-  if (!ind || !txt) return;
+  if (!ind) return;
   ind.dataset.state = state;
-  if (state === "connecting") txt.textContent = "connecting…";
+
+  let status;
+  if (state === "connecting") status = "Connecting…";
   else if (state === "connected") {
     const t = LAST_FETCH_AT ? new Date(LAST_FETCH_AT) : new Date();
-    txt.textContent = "live · synced " + relativeTime(t);
+    status = "Live · synced " + relativeTime(t);
   }
-  else if (state === "disconnected") txt.textContent = "offline — reconnecting…";
+  else status = "Offline — reconnecting…";
 
-  // Show user name
-  if (SETTINGS.userName) {
-    document.getElementById("conn-sep").style.display = "inline-block";
-    const u = document.getElementById("conn-user");
-    u.style.display = "inline";
-    u.textContent = SETTINGS.userName;
-  }
+  const userBit = SETTINGS.userName ? " · " + SETTINGS.userName : "";
+  ind.title = status + userBit;
+
+  const u = document.getElementById("conn-user");
+  if (u) u.textContent = SETTINGS.userName || "";
 }
 
 function relativeTime(d) {
@@ -2914,20 +2893,46 @@ function isUserArchetype(id) {
 }
 
 // ---- Mutation helpers (each fires a network write) ----
+// Per-(id, field) debounce timers and save chains. Without these,
+// every keystroke in a session note (or any other overlay field) fires
+// its own POST. Several POSTs in flight at once all see "no row exists
+// yet" inside upsertEdit and each appendRow a duplicate. Debounce
+// collapses bursts to one POST; the chain serializes any leftover
+// concurrency. Apps Script also holds a LockService lock as belt-and-
+// braces.
+const _editDebouncers = new Map();   // key -> timeout id
+const _editChains     = new Map();   // key -> in-flight Promise
+const EDIT_DEBOUNCE_MS = 400;
+
+function _scheduleEditPush(action, idKey, idValue, field, readLatestValue) {
+  const key = action + "|" + idValue + "|" + field;
+  const prev = _editDebouncers.get(key);
+  if (prev) clearTimeout(prev);
+  _editDebouncers.set(key, setTimeout(() => {
+    _editDebouncers.delete(key);
+    const chain = _editChains.get(key) || Promise.resolve();
+    const next = chain.catch(() => {}).then(async () => {
+      const value = readLatestValue();  // re-read STATE just before sending
+      try { await api(action, { [idKey]: idValue, field, value }); } catch {}
+    });
+    _editChains.set(key, next);
+  }, EDIT_DEBOUNCE_MS));
+}
+
 function pushArchetypeEdit(archetype_id, field, value) {
-  // Optimistic local update
+  // Optimistic local update — instant, no debounce.
   if (!STATE.overlays[archetype_id]) STATE.overlays[archetype_id] = {};
   STATE.overlays[archetype_id][field] = value;
-  // Async push
-  api("upsert_archetype_edit", { archetype_id, field, value }).catch(() => {});
-  showToast("Saved");
+  // Debounced + serialized network push.
+  _scheduleEditPush("upsert_archetype_edit", "archetype_id", archetype_id, field,
+    () => STATE.overlays[archetype_id][field]);
 }
 
 function pushModuleEdit(module_id, field, value) {
   if (!STATE.moduleOverlays[module_id]) STATE.moduleOverlays[module_id] = {};
   STATE.moduleOverlays[module_id][field] = value;
-  api("upsert_module_edit", { module_id, field, value }).catch(() => {});
-  showToast("Saved");
+  _scheduleEditPush("upsert_module_edit", "module_id", module_id, field,
+    () => STATE.moduleOverlays[module_id][field]);
 }
 
 // Module helpers
@@ -4091,8 +4096,8 @@ function renderMappings() {
 function switchView(view) {
   // RTW is a top-level mode — distinct from grid/mappings/session
   const isRTW = view === "rtw";
-  document.querySelectorAll(".view-btn").forEach(b => {
-    b.classList.toggle("active", !isRTW && b.dataset.view === view);
+  document.querySelectorAll(".nav-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.view === view);
   });
   document.getElementById("grid-view").style.display     = (!isRTW && (view === "grid" || view === "session")) ? "" : "none";
   document.getElementById("mappings-view").style.display = (!isRTW && view === "mappings") ? "" : "none";
@@ -4101,30 +4106,26 @@ function switchView(view) {
   document.body.classList.toggle("mappings-mode", !isRTW && view === "mappings");
   document.body.classList.toggle("rtw-mode", isRTW);
 
-  // Sector tab active state
-  document.querySelectorAll(".sector-tabs .tab").forEach(t => {
-    if (t.dataset.sector === "fmcg") t.classList.toggle("active", !isRTW);
-    if (t.dataset.sector === "rtw")  t.classList.toggle("active", isRTW);
-  });
-
   if (view === "mappings") renderMappings();
   if (view === "session") updateSessionStats();
   if (isRTW) renderRTW();
 }
 
-document.querySelectorAll(".view-btn").forEach(b => {
+document.querySelectorAll(".nav-btn").forEach(b => {
   b.addEventListener("click", () => switchView(b.dataset.view));
 });
 
-// Sector tabs — only FMCG and RTW are active
-document.querySelectorAll(".sector-tabs .tab").forEach(t => {
-  if (t.classList.contains("disabled")) return;
-  t.addEventListener("click", () => {
-    const sector = t.dataset.sector;
-    if (sector === "rtw") switchView("rtw");
-    else if (sector === "fmcg") switchView("grid");
+// Sector dropdown — only FMCG is active for now; others are disabled
+// at the <option> level. Future sectors can switch the dataset behind
+// the scenes without touching the rest of the chrome.
+const sectorDropdown = document.getElementById("sector-dropdown");
+if (sectorDropdown) {
+  sectorDropdown.addEventListener("change", (e) => {
+    // No-op for now — only FMCG is selectable. When other sectors
+    // ship, this handler routes to the right dataset/loader.
+    if (e.target.value !== "fmcg") e.target.value = "fmcg";
   });
-});
+}
 
 function updateSessionStats() {
   const all = getAllArchetypes();
