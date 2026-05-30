@@ -1,0 +1,4386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clarynt × PwC — FMCG Archetype Framework (live)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CLARYNT v4 — TANGIBLE INTELLIGENCE
+   Warm silk canvas · Marigold + Deep Rose · Editorial typography
+   ============================================================ */
+
+:root {
+  /* Surface */
+  --canvas:        #FAF5EC;
+  --canvas-tint:   #F3ECDC;
+  --card:          #FFFFFF;
+  --card-soft:     #FBF7EE;
+  --dark:          #1F2128;
+  --dark-soft:     #2A2D38;
+
+  /* Ink */
+  --ink:           #1A1A1A;
+  --ink-soft:      #4A4A4A;
+  --ink-muted:     #8A8A8A;
+  --ink-faint:     #B8B8B8;
+
+  /* Rule */
+  --rule:          #E6DFD0;
+  --rule-soft:     #EFE9DB;
+
+  /* Accents */
+  --marigold:      #E89522;
+  --marigold-l:   #F5A623;
+  --marigold-soft: #FCE9CC;
+  --rose:          #E8185A;
+  --rose-l:        #F04A7E;
+  --rose-soft:     #FCD9E3;
+
+  /* Lever colors */
+  --lev-exp:       #E89522;
+  --lev-ext:       #F5A623;
+  --lev-prd:       #2D9E6B;
+  --lev-cst:       #E8185A;
+  --lev-tfm:       #8B5CF6;
+
+  /* Type */
+  --font-display:  "Fraunces", Georgia, serif;
+  --font-body:     "Inter Tight", -apple-system, system-ui, sans-serif;
+  --font-mono:     "JetBrains Mono", ui-monospace, monospace;
+
+  /* Layout */
+  --max-width:     1440px;
+  --gutter:        32px;
+  --radius:        2px;
+  --radius-card:   4px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01", "cv11";
+}
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, textarea, select { font-family: inherit; font-size: inherit; color: inherit; }
+::selection { background: var(--marigold); color: var(--canvas); }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--canvas);
+  border-bottom: 1px solid var(--rule);
+  padding: 18px var(--gutter);
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 32px;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.brand-logo {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.brand-logo .accent { color: var(--marigold); }
+.brand-logo .term { color: var(--rose); }
+
+.brand-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--rule);
+  align-self: center;
+}
+
+.brand-context {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sector-tabs {
+  display: flex;
+  gap: 4px;
+  justify-self: center;
+  align-items: center;
+}
+
+.tabs-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--rule);
+  margin: 0 12px;
+}
+
+.tab-rtw {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.tab-rtw::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: var(--rose);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.tab {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  border-bottom: 2px solid transparent;
+  transition: color 180ms, border-color 180ms;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tab:hover { color: var(--ink-soft); }
+.tab.active {
+  color: var(--ink);
+  border-bottom-color: var(--marigold);
+}
+.tab.disabled {
+  color: var(--ink-faint);
+  cursor: not-allowed;
+}
+.tab.disabled::after {
+  content: " · soon";
+  font-weight: 400;
+  font-size: 10px;
+}
+
+.view-toggle {
+  display: flex;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.view-btn {
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  background: var(--card);
+  border-right: 1px solid var(--rule);
+  transition: background 150ms;
+}
+.view-btn:last-child { border-right: none; }
+.view-btn:hover { background: var(--card-soft); }
+.view-btn.active {
+  background: var(--ink);
+  color: var(--canvas);
+}
+
+/* ============================================================
+   PAGE INTRO
+   ============================================================ */
+
+.page-intro {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 40px var(--gutter) 28px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: end;
+}
+
+.intro-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.intro-title em {
+  font-style: italic;
+  color: var(--rose);
+  font-weight: 400;
+}
+
+.intro-meta {
+  font-size: 12px;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: right;
+  line-height: 1.6;
+}
+.intro-meta strong {
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.intro-byline {
+  grid-column: 1 / -1;
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  font-style: italic;
+  max-width: 760px;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   FILTERS
+   ============================================================ */
+
+.filter-bar {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 16px var(--gutter) 8px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 11px;
+  color: var(--ink-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 150ms;
+  white-space: nowrap;
+}
+.chip:hover {
+  background: var(--card-soft);
+  border-color: var(--ink-faint);
+}
+.chip.active {
+  background: var(--ink);
+  color: var(--canvas);
+  border-color: var(--ink);
+}
+.chip .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.filter-reset {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--ink-muted);
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-bottom: 1px dotted var(--ink-faint);
+}
+.filter-reset:hover { color: var(--rose); border-bottom-color: var(--rose); }
+
+/* Filters toggle (opens collapsible panel) */
+.filters-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 150ms;
+  font-family: inherit;
+}
+.filters-toggle:hover {
+  border-color: var(--ink-faint);
+  background: var(--card-soft);
+}
+.filters-toggle[aria-expanded="true"] {
+  background: var(--ink);
+  color: var(--canvas);
+  border-color: var(--ink);
+}
+.filters-toggle .filters-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--canvas);
+  background: var(--rose);
+  border-radius: 999px;
+  letter-spacing: 0;
+}
+.filters-toggle[aria-expanded="true"] .filters-count {
+  background: var(--marigold);
+}
+.filters-toggle .filters-caret {
+  font-size: 10px;
+  opacity: 0.6;
+  transition: transform 150ms;
+}
+.filters-toggle[aria-expanded="true"] .filters-caret { transform: rotate(180deg); }
+
+/* Collapsible panel that holds all six axes */
+.filters-panel {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  border-top: 1px dashed var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background: var(--card-soft);
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 220ms ease, opacity 180ms ease, padding 180ms ease;
+}
+.filters-panel.open {
+  max-height: 600px;
+  opacity: 1;
+  padding-top: 14px;
+  padding-bottom: 16px;
+}
+.filter-row {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px 0;
+}
+.filter-row .filter-label {
+  flex: 0 0 80px;
+  padding-top: 6px;
+  margin-right: 0;
+}
+.filter-row .filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+}
+
+/* ============================================================
+   GRID VIEW
+   ============================================================ */
+
+.archetype-grid {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 24px var(--gutter) 80px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius-card);
+  padding: 22px 22px 20px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 200ms;
+  box-shadow: 0 1px 0 var(--rule);
+  border: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  min-height: 240px;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(26, 26, 26, 0.08);
+  border-color: var(--ink-faint);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--lever-color, var(--marigold));
+  border-radius: 2px 0 0 2px;
+}
+
+.card[data-lever="EXP"] { --lever-color: var(--lev-exp); }
+.card[data-lever="EXT"] { --lever-color: var(--lev-ext); }
+.card[data-lever="PRD"] { --lever-color: var(--lev-prd); }
+.card[data-lever="CST"] { --lever-color: var(--lev-cst); }
+.card[data-lever="TFM"] { --lever-color: var(--lev-tfm); }
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.card-id {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.priority-flag {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-faint);
+  transition: color 150ms, transform 150ms;
+}
+.priority-flag:hover { color: var(--marigold); transform: scale(1.1); }
+.priority-flag.on { color: var(--marigold); }
+.priority-flag svg { width: 14px; height: 14px; }
+
+.lever-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: white;
+  background: var(--lever-color, var(--marigold));
+  border-radius: 2px;
+}
+
+.card-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.card-tagline {
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+
+.card-clients-preview {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-client-count {
+  font-size: 11px;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-client-count .count-num {
+  font-family: var(--font-mono);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.card-client-count .empty {
+  color: var(--ink-faint);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Add-archetype tile (last card in grid) */
+.card-add {
+  background: transparent;
+  border: 1.5px dashed var(--rule);
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 22px;
+  transition: border-color 200ms, background 200ms;
+}
+.card-add:hover {
+  background: var(--card-soft);
+  border-color: var(--ink-faint);
+  transform: none;
+}
+.card-add-plus {
+  font-size: 44px;
+  font-weight: 200;
+  line-height: 1;
+  color: var(--ink-faint);
+  margin-bottom: 14px;
+  transition: color 200ms;
+}
+.card-add:hover .card-add-plus {
+  color: var(--marigold);
+}
+.card-add-label {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+.card-add-hint {
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* User-added marker (small + next to the ID) */
+.card-user-mark {
+  display: inline-block;
+  margin-left: 4px;
+  color: var(--rose);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.drawer-user-mark {
+  color: var(--rose);
+  font-weight: 700;
+  font-size: 15px;
+  margin-left: 3px;
+  vertical-align: 1px;
+}
+
+/* ============================================================
+   DRAWER (archetype detail)
+   ============================================================ */
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.4);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms;
+  backdrop-filter: blur(2px);
+}
+.drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(820px, 100vw);
+  background: var(--canvas);
+  z-index: 101;
+  transform: translateX(100%);
+  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow-y: auto;
+  box-shadow: -20px 0 60px rgba(0,0,0,0.18);
+}
+.drawer.open { transform: translateX(0); }
+
+.drawer-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--canvas);
+  border-bottom: 1px solid var(--rule);
+  padding: 22px 36px 18px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: start;
+}
+
+.drawer-title {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.drawer-id {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+}
+
+.drawer-lever {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+.drawer-name {
+  width: 100%;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 4px 0;
+  margin: 6px 0 2px;
+  border-bottom: 1px dashed transparent;
+  transition: border-color 150ms;
+}
+.drawer-name:hover { border-bottom-color: var(--rule); }
+.drawer-name:focus { border-bottom-color: var(--marigold); }
+
+.drawer-tagline {
+  width: 100%;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--rose);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 4px 0;
+  border-bottom: 1px dashed transparent;
+  transition: border-color 150ms;
+}
+.drawer-tagline:hover { border-bottom-color: var(--rule); }
+.drawer-tagline:focus { border-bottom-color: var(--rose); }
+
+.drawer-close {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-muted);
+  border-radius: 50%;
+  transition: background 150ms, color 150ms;
+}
+.drawer-close:hover { background: var(--canvas-tint); color: var(--ink); }
+.drawer-close svg { width: 18px; height: 18px; }
+
+.drawer-priority {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  transition: all 150ms;
+}
+.drawer-priority svg { width: 12px; height: 12px; }
+.drawer-priority.on {
+  background: var(--marigold-soft);
+  color: var(--marigold);
+  border-color: var(--marigold);
+}
+.drawer-priority.on svg { fill: var(--marigold); }
+
+.drawer-body {
+  padding: 28px 36px 60px;
+}
+
+.section {
+  margin-bottom: 36px;
+}
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label .marker {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--marigold);
+  border-radius: 50%;
+}
+.section-label.editable .marker { background: var(--rose); }
+
+.problem-text {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+
+.attribute-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.attribute-cell {
+  background: var(--card);
+  padding: 12px 16px;
+}
+.attribute-name {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+.attribute-value {
+  font-size: 13px;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.proposition-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.prop-item {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.prop-item .num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--marigold);
+  padding-top: 3px;
+  font-weight: 600;
+}
+.prop-item strong { color: var(--ink); font-weight: 600; }
+
+.cts-lens {
+  padding: 16px 18px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--rose);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+.cts-lens strong { color: var(--ink); font-style: normal; font-weight: 600; }
+
+.exemplars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.exemplar-row {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 16px;
+  align-items: start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.exemplar-row:last-child { border-bottom: none; }
+.exemplar-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 4px 0;
+  border-bottom: 1px dashed transparent;
+}
+.exemplar-name:hover { border-bottom-color: var(--rule); }
+.exemplar-name:focus { border-bottom-color: var(--marigold); }
+.exemplar-why {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 4px 0;
+  border-bottom: 1px dashed transparent;
+  resize: none;
+  font-family: var(--font-body);
+}
+.exemplar-why:hover { border-bottom-color: var(--rule); }
+.exemplar-why:focus { border-bottom-color: var(--marigold); }
+.exemplar-remove {
+  color: var(--ink-faint);
+  padding: 4px 8px;
+  font-size: 11px;
+  transition: color 150ms;
+  opacity: 0;
+}
+.exemplar-row:hover .exemplar-remove { opacity: 1; }
+.exemplar-remove:hover { color: var(--rose); }
+.exemplar-add {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--marigold);
+  letter-spacing: 0.02em;
+  padding: 6px 0;
+}
+.exemplar-add:hover { color: var(--rose); }
+
+.clients-section {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  padding: 20px 22px;
+  border-radius: var(--radius-card);
+}
+.clients-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.clients-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--ink);
+}
+.clients-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+.client-row {
+  display: grid;
+  grid-template-columns: 1fr 110px 1fr 24px;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.client-row:last-child { border-bottom: none; }
+.client-name {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  transition: border-color 150ms;
+}
+.client-name:hover { border-color: var(--rule); }
+.client-name:focus { border-color: var(--marigold); background: var(--canvas); }
+
+.client-tier {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 5px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--card-soft);
+  color: var(--ink-soft);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 4l3 3 3-3' stroke='%238A8A8A' fill='none' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  padding-right: 22px;
+}
+.client-tier[data-tier="current"]    { color: #2D9E6B; border-color: #2D9E6B40; }
+.client-tier[data-tier="target"]     { color: #E89522; border-color: #E8952240; }
+.client-tier[data-tier="aspirational"] { color: #8B5CF6; border-color: #8B5CF640; }
+
+.client-note {
+  background: transparent;
+  border: 1px solid transparent;
+  font-size: 12px;
+  color: var(--ink-soft);
+  padding: 6px 8px;
+  font-style: italic;
+  border-radius: 2px;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color 150ms;
+}
+.client-note:hover { border-color: var(--rule); }
+.client-note:focus { border-color: var(--marigold); font-style: normal; background: var(--canvas); }
+
+.client-remove {
+  color: var(--ink-faint);
+  font-size: 14px;
+  transition: color 150ms;
+  opacity: 0.4;
+}
+.client-row:hover .client-remove { opacity: 1; }
+.client-remove:hover { color: var(--rose); }
+
+.client-add {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--canvas-tint);
+  border: 1px dashed var(--rule);
+  border-radius: 2px;
+  font-size: 12.5px;
+  color: var(--marigold);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  width: 100%;
+  justify-content: flex-start;
+  transition: all 150ms;
+}
+.client-add:hover {
+  background: var(--marigold-soft);
+  border-color: var(--marigold);
+  color: var(--rose);
+}
+
+.session-notes-area {
+  width: 100%;
+  min-height: 90px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-card);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+  outline: none;
+  resize: vertical;
+  transition: border-color 150ms;
+}
+.session-notes-area::placeholder {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.session-notes-area:focus { border-color: var(--marigold); }
+
+.session-note-built-in {
+  padding: 12px 16px;
+  background: var(--rose-soft);
+  border-left: 3px solid var(--rose);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.session-note-built-in .label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--rose);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.drawer-footer-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+}
+.btn {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 9px 16px;
+  border: 1px solid var(--rule);
+  background: var(--card);
+  border-radius: 2px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 150ms;
+}
+.btn:hover { background: var(--canvas-tint); border-color: var(--ink-faint); color: var(--ink); }
+.btn.btn-warn { color: var(--rose); border-color: var(--rose-soft); }
+.btn.btn-warn:hover { background: var(--rose-soft); border-color: var(--rose); }
+
+/* User-archetype editable controls in drawer (drawer body fields editable for F13+) */
+.drawer-lever-select {
+  border: none;
+  color: white;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 22px 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M3 4.5L6 7.5L9 4.5' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  background-size: 10px;
+}
+.drawer-lever-select option {
+  color: var(--ink);
+  background: var(--canvas);
+  font-family: var(--font-sans);
+}
+.user-arch-input {
+  width: 100%;
+  padding: 6px 9px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  transition: border-color 150ms;
+  box-sizing: border-box;
+}
+.user-arch-input:hover { border-color: var(--ink-faint); }
+.user-arch-input:focus {
+  outline: none;
+  border-color: var(--marigold);
+}
+.user-arch-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  resize: vertical;
+  min-height: 70px;
+  line-height: 1.55;
+  box-sizing: border-box;
+  transition: border-color 150ms;
+}
+.user-arch-textarea:hover { border-color: var(--ink-faint); }
+.user-arch-textarea:focus {
+  outline: none;
+  border-color: var(--marigold);
+}
+.user-arch-textarea.problem-text { font-style: italic; }
+
+/* Proposition edit row (replaces .prop-item display in user-archetype drawer) */
+.prop-item-edit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.prop-item-edit .num {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.05em;
+  min-width: 22px;
+}
+.prop-item-edit .prop-edit {
+  flex: 1 1 auto;
+}
+.prop-item-edit .prop-remove {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: var(--ink-faint);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.02em;
+}
+.prop-item-edit .prop-remove:hover { color: var(--rose); background: var(--rose-soft); }
+
+/* ============================================================
+   MAPPINGS VIEW (cross-cut: all clients across archetypes)
+   ============================================================ */
+
+.mappings-view {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 24px var(--gutter) 80px;
+}
+
+.mappings-empty {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--ink-muted);
+}
+.mappings-empty-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.mappings-empty-sub {
+  font-size: 14px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.mappings-table {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.mappings-row {
+  display: grid;
+  grid-template-columns: 220px 1fr 100px 1fr 240px;
+  gap: 16px;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--rule-soft);
+  align-items: center;
+}
+.mappings-row.header {
+  background: var(--canvas-tint);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.mappings-row:last-child { border-bottom: none; }
+.mapping-client {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--ink);
+}
+.mapping-archetype {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+.mapping-archetype .code {
+  font-family: var(--font-mono);
+  color: var(--ink-muted);
+  margin-right: 6px;
+}
+.mapping-archetype .lever-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.mapping-tier {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: capitalize;
+}
+.mapping-tier[data-tier="current"]      { color: #2D9E6B; }
+.mapping-tier[data-tier="target"]       { color: #E89522; }
+.mapping-tier[data-tier="aspirational"] { color: #8B5CF6; }
+.mapping-note {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+.mapping-jump {
+  font-size: 12px;
+  color: var(--marigold);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: right;
+}
+.mapping-jump:hover { color: var(--rose); }
+
+/* ============================================================
+   SESSION MODE
+   ============================================================ */
+
+body.session-mode {
+  background: var(--canvas);
+}
+body.session-mode .app-header {
+  border-bottom: 2px solid var(--ink);
+}
+body.session-mode .page-intro,
+body.session-mode .filter-bar,
+body.session-mode .filters-panel,
+body.mappings-mode .page-intro,
+body.mappings-mode .filter-bar,
+body.mappings-mode .filters-panel {
+  display: none;
+}
+body.session-mode .session-bar {
+  display: flex;
+}
+.session-bar {
+  display: none;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 28px var(--gutter) 16px;
+  align-items: baseline;
+  gap: 24px;
+  justify-content: space-between;
+}
+.session-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+}
+.session-stats {
+  display: flex;
+  gap: 32px;
+  font-size: 13px;
+}
+.session-stat {
+  display: flex;
+  flex-direction: column;
+}
+.session-stat-num {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--marigold);
+}
+.session-stat-label {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+body.session-mode .archetype-grid { padding-top: 8px; }
+body.session-mode .card { min-height: 280px; }
+body.session-mode .card-name { font-size: 22px; }
+
+/* ============================================================
+   TOAST (subtle save indicator)
+   ============================================================ */
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: var(--canvas);
+  padding: 9px 18px;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms, transform 200ms;
+  z-index: 200;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.toast .accent { color: var(--marigold); margin-right: 6px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.app-footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 24px var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--rule);
+  font-size: 11px;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+}
+.footer-meta { font-style: italic; }
+.footer-actions { display: flex; gap: 8px; }
+
+/* ============================================================
+   RIGHT TO WIN VIEW
+   ============================================================ */
+
+body.rtw-mode .page-intro,
+body.rtw-mode .filter-bar {
+  display: none;
+}
+
+body.rtw-mode .sector-tabs .tab:not(.tab-rtw) {
+  opacity: 0.45;
+}
+body.rtw-mode .sector-tabs .tab:not(.tab-rtw).active {
+  color: var(--ink-muted);
+  border-bottom-color: transparent;
+}
+body.rtw-mode .sector-tabs .tab-rtw {
+  color: var(--ink);
+  border-bottom-color: var(--rose);
+}
+body.rtw-mode .view-toggle { visibility: hidden; }
+
+.rtw-view {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 80px;
+}
+
+.rtw-intro {
+  padding: 40px 0 24px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: end;
+}
+
+.rtw-intro h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.rtw-intro h1 em {
+  font-style: italic;
+  color: var(--rose);
+  font-weight: 400;
+}
+.rtw-intro .byline {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  font-style: italic;
+  max-width: 760px;
+  line-height: 1.6;
+}
+
+.rtw-stats {
+  font-size: 12px;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: right;
+  line-height: 1.6;
+}
+.rtw-stats .num-live   { color: var(--lev-prd); font-weight: 700; font-family: var(--font-mono); }
+.rtw-stats .num-build  { color: var(--marigold); font-weight: 700; font-family: var(--font-mono); }
+
+/* RTW filter bar (separate from FMCG one) */
+.rtw-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 0 22px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 28px;
+}
+
+/* Module grid */
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.module-card {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-card);
+  padding: 22px 22px 18px;
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 200ms, border-color 200ms;
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  position: relative;
+}
+.module-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(26, 26, 26, 0.08);
+  border-color: var(--ink-faint);
+}
+
+.module-card[data-status="live"] {
+  border-left: 3px solid var(--lev-prd);
+}
+.module-card[data-status="build"] {
+  border-left: 3px solid var(--marigold);
+  border-left-style: dashed;
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.module-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.status-badge[data-status="live"] {
+  background: rgba(45, 158, 107, 0.12);
+  color: var(--lev-prd);
+}
+.status-badge[data-status="live"]::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: var(--lev-prd);
+  border-radius: 50%;
+}
+.status-badge[data-status="build"] {
+  background: rgba(232, 149, 34, 0.12);
+  color: var(--marigold);
+}
+.status-badge[data-status="build"]::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: var(--marigold);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.module-value-prop {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.module-meta {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.module-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.layer-chip {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  background: var(--canvas-tint);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  color: var(--ink-soft);
+}
+
+.archetype-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 5px;
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 120ms;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.archetype-mini:hover {
+  background: var(--marigold-soft);
+  border-color: var(--marigold);
+  color: var(--ink);
+}
+.archetype-mini .lev-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+/* Module drawer (reuses .drawer with adjustments) */
+.module-drawer .drawer-id { color: var(--ink-muted); }
+
+.module-cross-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--card-soft);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 150ms;
+  margin: 4px 6px 4px 0;
+}
+.module-cross-link:hover {
+  background: var(--marigold-soft);
+  border-color: var(--marigold);
+  color: var(--ink);
+}
+.module-cross-link .code {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 5px;
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+.module-cross-link .lev-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.module-value-prop-edit {
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  padding: 8px 10px;
+  border-radius: 2px;
+  outline: none;
+  resize: vertical;
+  min-height: 72px;
+  transition: border-color 150ms, background 150ms;
+}
+.module-value-prop-edit:hover { border-color: var(--rule); }
+.module-value-prop-edit:focus { border-color: var(--marigold); background: var(--card); }
+
+.status-toggle {
+  display: inline-flex;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--card);
+}
+.status-toggle button {
+  padding: 6px 14px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  background: transparent;
+  transition: all 150ms;
+}
+.status-toggle button.active[data-status="live"] {
+  background: var(--lev-prd);
+  color: white;
+}
+.status-toggle button.active[data-status="build"] {
+  background: var(--marigold);
+  color: white;
+}
+
+/* ============================================================
+   SETUP MODAL (first-load: URL + name)
+   ============================================================ */
+
+.setup-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--canvas);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.setup-modal {
+  width: 100%;
+  max-width: 540px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-card);
+  padding: 36px 40px 32px;
+  box-shadow: 0 24px 60px rgba(26, 26, 26, 0.12);
+}
+
+.setup-header {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--marigold);
+  margin-bottom: 16px;
+}
+
+.setup-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.setup-subtitle {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 28px;
+}
+
+.setup-field { margin-bottom: 20px; }
+.setup-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+.setup-input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--canvas-tint);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 150ms, background 150ms;
+}
+.setup-input:focus { border-color: var(--marigold); background: white; }
+.setup-help {
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-top: 6px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.setup-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+}
+
+.setup-btn {
+  padding: 10px 22px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 2px;
+  background: var(--ink);
+  color: var(--canvas);
+  border: 1px solid var(--ink);
+  cursor: pointer;
+  transition: background 150ms;
+}
+.setup-btn:hover { background: var(--dark-soft); }
+.setup-btn:disabled { background: var(--ink-faint); border-color: var(--ink-faint); cursor: not-allowed; }
+.setup-btn.secondary { background: transparent; color: var(--ink-soft); }
+.setup-btn.secondary:hover { background: var(--canvas-tint); color: var(--ink); }
+
+.setup-error {
+  margin-top: 16px;
+  padding: 10px 14px;
+  background: var(--rose-soft);
+  border-left: 3px solid var(--rose);
+  font-size: 12px;
+  color: var(--rose);
+  font-style: italic;
+}
+
+/* ============================================================
+   CONNECTION INDICATOR (in header)
+   ============================================================ */
+
+.conn-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 11px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.conn-indicator .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.conn-indicator[data-state="connecting"] .dot {
+  background: var(--marigold);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+.conn-indicator[data-state="connected"] .dot {
+  background: var(--lev-prd);
+}
+.conn-indicator[data-state="disconnected"] {
+  background: var(--rose-soft);
+  border-color: var(--rose);
+  color: var(--rose);
+}
+.conn-indicator[data-state="disconnected"] .dot { background: var(--rose); }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.8); }
+}
+
+.conn-user {
+  font-weight: 600;
+  color: var(--ink);
+}
+.conn-sep {
+  width: 1px;
+  height: 10px;
+  background: var(--rule);
+  display: inline-block;
+}
+
+/* Make the brand row a bit more flexible so the indicator fits */
+.brand {
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1180px) {
+  .archetype-grid { grid-template-columns: repeat(3, 1fr); }
+  .module-grid    { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .archetype-grid { grid-template-columns: repeat(2, 1fr); }
+  .module-grid    { grid-template-columns: 1fr; }
+  .header-inner { grid-template-columns: 1fr; gap: 16px; }
+  .sector-tabs { justify-self: start; flex-wrap: wrap; }
+  .view-toggle { justify-self: start; }
+  .intro-title { font-size: 32px; }
+  .mappings-row { grid-template-columns: 1fr; gap: 8px; }
+  .drawer { width: 100vw; }
+  .rtw-intro { grid-template-columns: 1fr; }
+  .rtw-intro h1 { font-size: 32px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     SETUP OVERLAY (first-load: Apps Script URL + name)
+     ============================================================ -->
+<div class="setup-overlay" id="setup-overlay" style="display:none">
+  <div class="setup-modal">
+    <div class="setup-header">Connect to workspace</div>
+    <div class="setup-title" id="setup-title">Sign in to the joint workspace</div>
+    <div class="setup-subtitle" id="setup-subtitle">
+      One-time setup. Your edits will sync live with everyone else in the workspace.
+    </div>
+
+    <div class="setup-field" id="setup-url-field">
+      <label class="setup-label" for="setup-url">Apps Script URL</label>
+      <input class="setup-input" id="setup-url" type="url" placeholder="https://script.google.com/macros/s/.../exec" />
+      <div class="setup-help">Paste the Web App URL from your Apps Script deployment. Only needed once — saved to this browser.</div>
+    </div>
+
+    <div class="setup-field">
+      <label class="setup-label" for="setup-name">Your name</label>
+      <input class="setup-input" id="setup-name" type="text" placeholder="e.g. BD (Clarynt) or Jane Doe (PwC)" autocomplete="name" />
+      <div class="setup-help">Shown next to your edits. Used for attribution, not for security.</div>
+    </div>
+
+    <div class="setup-error" id="setup-error" style="display:none"></div>
+
+    <div class="setup-actions">
+      <button class="setup-btn secondary" id="setup-reconfigure" style="display:none">Change URL</button>
+      <button class="setup-btn" id="setup-submit">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand">
+      <span class="brand-logo">Clary<span class="accent">nt</span><span class="term">_</span></span>
+      <span class="brand-divider"></span>
+      <span class="brand-context">× PwC · Archetype Framework</span>
+      <span class="brand-divider"></span>
+      <span class="conn-indicator" id="conn-indicator" data-state="connecting" title="Connection to workspace">
+        <span class="dot"></span>
+        <span id="conn-text">connecting…</span>
+        <span class="conn-sep" id="conn-sep" style="display:none"></span>
+        <span class="conn-user" id="conn-user" style="display:none"></span>
+      </span>
+    </div>
+    <nav class="sector-tabs">
+      <button class="tab active" data-sector="fmcg">FMCG</button>
+      <button class="tab disabled" disabled>Durables</button>
+      <button class="tab disabled" disabled>OTC / Consumer Health</button>
+      <button class="tab disabled" disabled>Retail</button>
+      <span class="tabs-divider"></span>
+      <button class="tab tab-rtw" data-sector="rtw">Right to Win</button>
+    </nav>
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="grid">Grid</button>
+      <button class="view-btn" data-view="mappings">Mappings</button>
+      <button class="view-btn" data-view="session">Session</button>
+    </div>
+  </div>
+</header>
+
+<!-- Page intro -->
+<div class="page-intro">
+  <div>
+    <h1 class="intro-title">FMCG growth archetypes <em>where Clarynt + PwC create value together</em></h1>
+    <p class="intro-byline">Twelve archetypes, anchored to a specific growth problem. Click into any card to read the proposition, swap exemplars, add your clients with tier, and tag the ones you want to lead with. All edits are live across the joint Clarynt + PwC workspace.</p>
+  </div>
+  <div class="intro-meta">
+    <strong>Working artifact</strong><br>
+    Q2 FY27 · v0.1<br>
+    Clarynt · PwC
+  </div>
+</div>
+
+<!-- Session mode bar (only visible in session mode) -->
+<div class="session-bar">
+  <div class="session-title">FMCG Archetypes — joint working session</div>
+  <div class="session-stats">
+    <div class="session-stat">
+      <span class="session-stat-num" id="ss-priority">0</span>
+      <span class="session-stat-label">Prioritised</span>
+    </div>
+    <div class="session-stat">
+      <span class="session-stat-num" id="ss-clients">0</span>
+      <span class="session-stat-label">Clients mapped</span>
+    </div>
+    <div class="session-stat">
+      <span class="session-stat-num" id="ss-archetypes">12</span>
+      <span class="session-stat-label">Archetypes</span>
+    </div>
+  </div>
+</div>
+
+<!-- Filter toolbar (Filters toggle, inline flag chips, clear link) -->
+<div class="filter-bar" id="filter-bar">
+  <button class="filters-toggle" id="filters-toggle" aria-expanded="false" type="button">
+    Filters
+    <span class="filters-count" id="filters-count" hidden>0</span>
+    <span class="filters-caret">▾</span>
+  </button>
+  <div class="filter-group">
+    <span class="filter-label">Show</span>
+    <button class="chip" data-filter="flag" data-val="priority">Prioritised only</button>
+    <button class="chip" data-filter="flag" data-val="mapped">With clients</button>
+  </div>
+  <a class="filter-reset" id="filter-reset">clear filters</a>
+</div>
+
+<!-- Collapsible filters panel: 7 axes, one row each -->
+<div class="filters-panel" id="filters-panel">
+  <div class="filter-row">
+    <span class="filter-label">Lever</span>
+    <div class="filter-chips">
+      <button class="chip" data-filter="lever" data-val="EXP"><span class="dot" style="background:var(--lev-exp)"></span>Expansion</button>
+      <button class="chip" data-filter="lever" data-val="EXT"><span class="dot" style="background:var(--lev-ext)"></span>Extraction</button>
+      <button class="chip" data-filter="lever" data-val="PRD"><span class="dot" style="background:var(--lev-prd)"></span>Productivity</button>
+      <button class="chip" data-filter="lever" data-val="CST"><span class="dot" style="background:var(--lev-cst)"></span>Cost</button>
+      <button class="chip" data-filter="lever" data-val="TFM"><span class="dot" style="background:var(--lev-tfm)"></span>Transformation</button>
+    </div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">Scale</span>
+    <div class="filter-chips">
+      <button class="chip" data-filter="scale" data-val="National established">National established</button>
+      <button class="chip" data-filter="scale" data-val="Regional">Regional</button>
+      <button class="chip" data-filter="scale" data-val="Challenger / D2C">Challenger / D2C</button>
+    </div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">Channel</span>
+    <div class="filter-chips">
+      <button class="chip" data-filter="channel" data-val="GT-dominant">GT-dominant</button>
+      <button class="chip" data-filter="channel" data-val="Selective GT">Selective GT</button>
+      <button class="chip" data-filter="channel" data-val="Asset-linked">Asset-linked</button>
+      <button class="chip" data-filter="channel" data-val="Omnichannel">Omnichannel</button>
+      <button class="chip" data-filter="channel" data-val="MT-heavy">MT-heavy</button>
+      <button class="chip" data-filter="channel" data-val="Nascent GT">Nascent GT</button>
+    </div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">Geography</span>
+    <div class="filter-chips">
+      <button class="chip" data-filter="geography" data-val="Rural-deepening">Rural-deepening</button>
+      <button class="chip" data-filter="geography" data-val="Urban-breaking">Urban-breaking</button>
+      <button class="chip" data-filter="geography" data-val="Citadel cities">Citadel cities</button>
+      <button class="chip" data-filter="geography" data-val="Pan-India">Pan-India</button>
+      <button class="chip" data-filter="geography" data-val="Expansion-entering">Expansion-entering</button>
+      <button class="chip" data-filter="geography" data-val="Urban-first">Urban-first</button>
+    </div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">Category</span>
+    <div class="filter-chips">
+      <button class="chip" data-filter="category" data-val="Staple">Staple</button>
+      <button class="chip" data-filter="category" data-val="Impulse">Impulse</button>
+      <button class="chip" data-filter="category" data-val="Lifestyle">Lifestyle / Premium</button>
+      <button class="chip" data-filter="category" data-val="Multi-category">Multi-category</button>
+      <button class="chip" data-filter="category" data-val="Regional">Regional preference</button>
+    </div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">Growth</span>
+    <div class="filter-chips">
+      <button class="chip" data-filter="growthMode" data-val="Penetration">Penetration</button>
+      <button class="chip" data-filter="growthMode" data-val="Extraction">Extraction</button>
+      <button class="chip" data-filter="growthMode" data-val="New market">New market entry</button>
+      <button class="chip" data-filter="growthMode" data-val="defence">Share defence</button>
+      <button class="chip" data-filter="growthMode" data-val="Profitable growth">Profitable growth</button>
+      <button class="chip" data-filter="growthMode" data-val="Channel optimisation">Channel optimisation</button>
+    </div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">Digital</span>
+    <div class="filter-chips">
+      <button class="chip" data-filter="digital" data-val="Legacy-digitising">Legacy-digitising</button>
+      <button class="chip" data-filter="digital" data-val="Partially modern">Partially modern</button>
+      <button class="chip" data-filter="digital" data-val="AI-native">AI-native</button>
+      <button class="chip" data-filter="digital" data-val="Partially modern to AI-native">Partially modern to AI-native</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     GRID VIEW
+     ============================================================ -->
+<main class="archetype-grid" id="grid-view"></main>
+
+<!-- ============================================================
+     MAPPINGS VIEW
+     ============================================================ -->
+<main class="mappings-view" id="mappings-view" style="display:none"></main>
+
+<!-- ============================================================
+     RIGHT TO WIN VIEW
+     ============================================================ -->
+<main class="rtw-view" id="rtw-view" style="display:none"></main>
+
+<!-- ============================================================
+     DRAWER (per-archetype detail)
+     ============================================================ -->
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<aside class="drawer" id="drawer">
+  <!-- content injected by JS -->
+</aside>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="app-footer">
+  <div class="footer-meta">Clarynt × PwC · FMCG archetype framework · v1 live · edits sync to shared workspace</div>
+  <div class="footer-actions">
+    <button class="btn" id="export-json">Export JSON</button>
+    <button class="btn" id="export-summary">Print summary</button>
+    <button class="btn btn-warn" id="reset-all">Reset all edits</button>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"><span class="accent">●</span><span id="toast-msg">Saved</span></div>
+
+<!-- ============================================================
+     DATA + APP
+     ============================================================ -->
+<script>
+// ============================================================
+// ARCHETYPE DATA (FMCG — first pass)
+// ============================================================
+const ARCHETYPES_FMCG_BASE = [
+  {
+    id: "F1",
+    name: "Rural Reach Extender",
+    tagline: "Crack sub-distributor economics as urban plateaus",
+    lever: "EXP",
+    coreProblem: "National brand whose urban growth has plateaued. The next 10 percentage points of penetration sit in Tier 3/4 towns and rural belts where direct coverage breaks the cost curve. The real question is when indirect coverage stops being a growth engine and starts being a cost-to-serve liability.",
+    attributes: {
+      scale: "National established",
+      channel: "GT-dominant",
+      geography: "Rural-deepening",
+      category: "Staple",
+      growthMode: "Penetration + expansion",
+      digital: "Legacy-digitising",
+    },
+    proposition: [
+      "Rural micromarket scoring across 5.5 lakh villages — surfaces the 70% of rural value concentrated in 20% of villages",
+      "Sub-distributor placement economics — when SubD beats van-direct and where to flip the model",
+      "Beat geometry for high-throw rural routes with road-network distance, not straight-line radius",
+      "Forward demand sensing using income events, agri cycle, monsoon, and shock signals to time the rural push",
+    ],
+    costToServeLens: "SubD ROI and indirect-vs-direct economics are the explicit lens. Adding villages without modelling cost-to-serve is the failure mode this archetype is designed to prevent.",
+    exemplars: [
+      { name: "Dabur",            why: "Rural-first health and personal care portfolio with explicit rural expansion mandate" },
+      { name: "Godrej Consumer",  why: "Multi-category rural distributor network being modernised" },
+      { name: "Emami",            why: "Ayurvedic + personal care with explicit GT-mart focus" },
+    ],
+    sessionNote: "",
+  },
+  {
+    id: "F2",
+    name: "Impulse Asset Sweater",
+    tagline: "Outlet portfolio productivity, not just asset redeployment",
+    lever: "EXT",
+    coreProblem: "Heavy deployment of physical assets — coolers, racks, visi-coolers, POSM — at hundreds of thousands of outlets, with no outlet-level visibility into asset throughput. The deeper problem is portfolio productivity: a long tail of outlets is consuming beats, distributor working capital, and asset investment with low return.",
+    attributes: {
+      scale: "National established",
+      channel: "Asset-linked",
+      geography: "Urban + semi-urban",
+      category: "Impulse",
+      growthMode: "Share gain + defence",
+      digital: "Partially modern",
+    },
+    proposition: [
+      "Asset-level ROI scoring against catchment demand, footfall proximity, and outlet class — the golden triangle of location, portfolio, service",
+      "Cooler / rack redeployment prioritisation with simulated impact before any field action",
+      "Outlet-level P&L view — beat time, distributor credit, asset investment, throughput in one place",
+      "Beat redesign for asset-heavy routes where serviceability constrains placement",
+    ],
+    costToServeLens: "Asset redeployment is one intervention. The broader lens is outlet portfolio productivity — how to grow throughput without growing the outlet count or the beat hours.",
+    exemplars: [
+      { name: "Coca-Cola India / HCCB", why: "Cooler-led distribution, deep visibility gap on placement productivity" },
+      { name: "Perfetti Van Melle",     why: "Impulse confectionery, dense outlet base, rack and POSM heavy" },
+      { name: "Varun Beverages",        why: "Pepsi bottler, cold-chain and route-density heavy beverage distribution" },
+    ],
+    sessionNote: "",
+  },
+  {
+    id: "F3",
+    name: "Urban Premium Breaker",
+    tagline: "The right 500 outlets, not the largest 5,000",
+    lever: "EXP",
+    coreProblem: "Premium or lifestyle FMCG brand that needs selective presence in the right 500 outlets across the right 8-10 cities. Distribution is not a numbers game for this archetype — it is a precision problem. Wrong outlets cost both shelf and brand equity.",
+    attributes: {
+      scale: "National / aspirational national",
+      channel: "Selective GT",
+      geography: "Urban-breaking",
+      category: "Lifestyle / Premium",
+      growthMode: "Penetration — top-outlet focus",
+      digital: "Partially modern to AI-native",
+    },
+    proposition: [
+      "Outlet classification with premium signals — RWI, building class, HFA proximity, brand panel adjacency",
+      "Top-outlet break-in sequencing — which 500 outlets in which order, scored on conversion likelihood",
+      "Catchment-level assortment guidance — SKU mix tuned to premiumness index by distance from HFA",
+      "Prestige outlet mapping by city with refresh as the urban form changes",
+    ],
+    costToServeLens: "Cost per productive outlet, not cost per outlet. The objective is to lower the cost of acquisition for the outlets that actually move premium SKUs.",
+    exemplars: [
+      { name: "Marico (premium portfolio)", why: "Premium hair and Saffola SKUs needing selective urban entry" },
+      { name: "ITC (lifestyle / personal care)", why: "Premium personal care, where presence quality beats presence volume" },
+      { name: "L'Oreal India",              why: "Premium beauty in the right outlets across metros and Tier 1" },
+    ],
+    sessionNote: "Distinct from F5 (Challenger GT Crossover) — F3 is an established brand going premium-selective; F5 is a challenger building GT from scratch.",
+  },
+  {
+    id: "F4",
+    name: "Omnichannel Balancer",
+    tagline: "GT defence and channel architecture, in one view",
+    lever: "TFM",
+    coreProblem: "Established player with strong GT presence now facing share bleed to quick commerce in citadel cities. Two related problems: channel defence (protecting GT share) and channel architecture (how to assort and price differently across GT, QC, MT). The CMO buys the first. The VP Sales buys the second.",
+    attributes: {
+      scale: "National established",
+      channel: "Omnichannel",
+      geography: "Citadel cities, metro and Tier 1",
+      category: "Staple + impulse",
+      growthMode: "Channel optimisation + share defence",
+      digital: "Partially modern",
+    },
+    proposition: [
+      "Cross-channel rolling decision plane — channel prioritisation by pincode with adjusted ROAS",
+      "Outlet-level channel vulnerability — GT outlets within proximity of dark stores, MT stores, with leakage signals",
+      "Channel-aware assortment and pack-price decisions — same brand, different play by channel zone",
+      "Always-on engine for citadel city operations, replacing annual investment cycles with continuous rebalancing",
+    ],
+    costToServeLens: "Channel ROI and cost-to-serve discipline are central. The hidden cost is GT investment in zones where QC has structurally shifted demand and won't come back.",
+    exemplars: [
+      { name: "Nestle India",       why: "Strong GT + QC bleed in metros, citadel city operating model needed" },
+      { name: "Hindustan Unilever", why: "GT depth + QC growth + premium portfolio across all channels" },
+      { name: "P&G India",          why: "Pack-price architecture under pressure across GT, MT, QC simultaneously" },
+    ],
+    sessionNote: "Most forward-looking FMCG archetype. Most resonant with current RtM conversations. Consider disproportionate session time.",
+  },
+  {
+    id: "F5",
+    name: "Challenger GT Crossover",
+    tagline: "Build GT muscle from a D2C base, lean",
+    lever: "EXP",
+    coreProblem: "Digital-first or D2C brand with strong online traction but minimal GT presence. Needs to build general trade muscle in top 20 cities without legacy field force infrastructure. The play is selective entry, not scale entry.",
+    attributes: {
+      scale: "Challenger / D2C",
+      channel: "Nascent GT",
+      geography: "Urban-first, top 20 cities",
+      category: "Lifestyle / personal care / health",
+      growthMode: "New channel entry",
+      digital: "AI-native appetite",
+    },
+    proposition: [
+      "GT playbook for new entrants — outlet prioritisation in top cities with conversion-likelihood scoring",
+      "Distributor onboarding intelligence — which DBs to approach for which catchments first",
+      "Adjacent-category POI overlays — fashion + footwear for beauty, chemist clusters for wellness — to find premium-leaning catchments",
+      "WhatsApp-led field execution for lean teams without a full SFA stack",
+    ],
+    costToServeLens: "Lean build. The proposition explicitly avoids replicating legacy field force economics. Selectivity is the cost discipline.",
+    exemplars: [
+      { name: "Honasa Consumer (Mamaearth)", why: "Listed digital-first beauty brand actively scaling chemist and GT channels" },
+      { name: "Sugar Cosmetics",             why: "Colour cosmetics with strong MT, building chemist depth" },
+      { name: "Wow Skin Science",            why: "D2C beauty with broad portfolio entering offline" },
+    ],
+    sessionNote: "Smaller ticket size than F1-F4 but the panel of named brands (Honasa, Minimalist, Sugar, Plum, Bombay Shaving, MyGlamm, Atomberg, boAt, Wingreens, Veeba, Licious, OZiva) is large enough to warrant its own archetype rather than folding into F3.",
+  },
+  {
+    id: "F6",
+    name: "Regional Expansionist",
+    tagline: "Enter the adjacent geography from regional strength",
+    lever: "EXP",
+    coreProblem: "Strong regional brand entering a new geography — adjacent state, metro, or zone. The brand has equity at home but is unknown in the new market. The growth question is sequencing: which towns first, which distributors, what assortment to lead with.",
+    attributes: {
+      scale: "Regional",
+      channel: "Regional GT",
+      geography: "Expansion-entering",
+      category: "Staple / regional preference",
+      growthMode: "New market entry",
+      digital: "Legacy-digitising",
+    },
+    proposition: [
+      "Market entry micromarket analysis — town scoring on demand signals, outlet density, distributor availability",
+      "Urban-first sequencing for new geography entry — start with concentration, expand to spread",
+      "Distributor network gap analysis — where the brand can be picked up by existing strong DBs in the new geography",
+      "Assortment localisation for the new market — what regional preferences to lead with vs hold back",
+    ],
+    costToServeLens: "Market entry cost vs revenue sequencing. The trap is spreading too thin in the new geography before economics prove out in beachhead clusters.",
+    exemplars: [
+      { name: "Bikaji Foods", why: "Rajasthan and North core, actively expanding nationally" },
+      { name: "MTR Foods",    why: "South India RTC and beverages scaling beyond home region" },
+      { name: "Hatsun Agro",  why: "South India dairy with national ambitions, distributor network gap" },
+    ],
+    sessionNote: "F6 and F7 are often a strategic fork the regional brand has not yet resolved. The session is a useful place to let that debate happen — Clarynt can model both options.",
+  },
+  {
+    id: "F7",
+    name: "Regional Deepener",
+    tagline: "Rural depth within home market equity territory",
+    lever: "EXT",
+    coreProblem: "Regional brand with strong urban presence in its home state, now extending into the district and town layers below. Different from F1 because the brand already has pull — the problem is distribution infrastructure, not demand creation.",
+    attributes: {
+      scale: "Regional",
+      channel: "Regional GT, indirect-heavy",
+      geography: "Rural-deepening within home market",
+      category: "Staple / regional preference",
+      growthMode: "Penetration within existing equity",
+      digital: "Legacy-digitising",
+    },
+    proposition: [
+      "Rural micromarket depth mapping within home state — village-level demand and outlet whitespace",
+      "Sub-distributor placement vs van-direct economics modelling — when each model wins by sub-district",
+      "Route productivity for extended coverage — beat redesign for low-density terrain",
+      "Forward demand sensing tuned to the home market's agri and festival calendar",
+    ],
+    costToServeLens: "SubD vs van economics is the explicit cost lens. Rural depth without indirect cost discipline destroys regional margins faster than national brands.",
+    exemplars: [
+      { name: "Balaji Wafers",      why: "Western India snacks champion with headroom beneath core city layer" },
+      { name: "Aavin (TN dairy)",   why: "State dairy with extreme home-market depth still to extract" },
+      { name: "Eastern Condiments", why: "Kerala spices with deep GT roots, district layer below towns" },
+    ],
+    sessionNote: "",
+  },
+  {
+    id: "F8",
+    name: "Coverage-to-Productivity Converter",
+    tagline: "Same coverage, higher throughput per call",
+    lever: "PRD",
+    coreProblem: "Numeric distribution on paper is 600K-1M+ outlets, but productive coverage — outlets buying 3+ times per month at target basket — is a fraction of that. Looks like a sales-force effectiveness problem; is actually a data and decision-support problem. The field force does not know which outlets to prioritise, at what frequency, with what assortment.",
+    attributes: {
+      scale: "National established",
+      channel: "GT-dominant",
+      geography: "Pan-India, urban + semi-urban",
+      category: "Any — staple and impulse both",
+      growthMode: "Productivity — same base, higher throughput",
+      digital: "Partially modern (DMS/SFA in place, underused)",
+    },
+    proposition: [
+      "Outlet productivity scoring with revenue, line count, frequency, and basket trajectory",
+      "Beat rationalisation and call frequency optimisation — high-value outlets visited more, ghost outlets retired",
+      "Productive vs covered outlet gap analysis — where ND looks healthy but WD is bleeding",
+      "Lines-per-call and basket upgrade modelling, salesperson workload and territory rebalancing",
+    ],
+    costToServeLens: "Cost per productive call, not cost per outlet added. This is the archetype where growth and cost discipline are most directly in tension. The goal is to bend the curve — revenue per call, not revenue per outlet count.",
+    exemplars: [
+      { name: "Marico",          why: "Mature GT with classic productive-coverage gap across the portfolio" },
+      { name: "Dabur",            why: "Multi-category GT with DMS/SFA underutilised at outlet level" },
+      { name: "Godrej Consumer",  why: "Large GT footprint, productive-coverage discipline as the next lever" },
+    ],
+    sessionNote: "Together with F9, the strongest CFO conversation in the FMCG set. Sequence toward the end of the FMCG block so the session builds from pure growth to growth + profitability.",
+  },
+  {
+    id: "F9",
+    name: "Portfolio Productivity Pruner",
+    tagline: "Concentrate firepower on hero SKUs, redirect the tail",
+    lever: "CST",
+    coreProblem: "Bloated SKU tail — often post-acquisition or post-category expansion — where 70-80% of GT revenue is generated by 20-30% of SKUs. The full portfolio consumes distributor working capital, beat time, and stockist shelf space. The growth unlock is focus.",
+    attributes: {
+      scale: "National established",
+      channel: "GT-dominant + MT",
+      geography: "Pan-India",
+      category: "Multi-category or complex portfolio",
+      growthMode: "Profitable growth — selectivity, not volume max",
+      digital: "Partially modern to AI-native",
+    },
+    proposition: [
+      "SKU × outlet × channel productivity matrix — where each SKU actually earns its shelf",
+      "Distributor working capital impact by SKU tail — the hidden cost of breadth",
+      "Beat efficiency by portfolio complexity — what the field force could sell deeper if asked to carry less",
+      "Tail rationalisation with channel redirect — which SKUs to push into MT or e-commerce vs delist",
+    ],
+    costToServeLens: "Distributor WC impact and beat efficiency are the explicit cost levers. This is the archetype that lands an outlet-level P&L conversation directly with the CFO.",
+    exemplars: [
+      { name: "Hindustan Unilever", why: "Post-portfolio acquisitions including Minimalist, OZiva — complexity rising" },
+      { name: "ITC (Foods + FMCG)", why: "Multi-category breadth, classic candidate for SKU productivity audit" },
+      { name: "Nestle India",       why: "Portfolio complexity post-Maggi rebuild, premium tail growing" },
+    ],
+    sessionNote: "Most consulting firms can do the portfolio rationalisation analysis. The Clarynt advantage is showing which SKUs actually move at which outlet types — the analysis lands in the field, not just on the slide.",
+  },
+  {
+    id: "F10",
+    name: "Cross-Channel Price Harmoniser",
+    tagline: "One brand, four channels, one consistent reasoning",
+    lever: "TFM",
+    coreProblem: "Same brand. Four channels — GT, MT, QC, e-commerce. Three price points, two pack architectures, no consistent reasoning. Kirana owners compare shelf prices to MT promotional prices and Blinkit listings. Margins leak. Consumer trust erodes. The right answer is not pack-size arbitrage — it is price-pack architecture discipline.",
+    attributes: {
+      scale: "National established",
+      channel: "Omnichannel (4-channel)",
+      geography: "Tier 1 and Tier 2 cities with MT + QC density",
+      category: "Staple + planned (price-compared categories)",
+      growthMode: "Share defence + profitable growth",
+      digital: "Partially modern",
+    },
+    proposition: [
+      "Price-pack architecture diagnostic across GT, MT, QC, EC at SKU level — where leakage is structural vs tactical",
+      "Outlet-level MT/QC proximity mapping — which GT outlets sit within compromised price zones",
+      "Pack-size arbitrage identification and consolidation recommendation",
+      "Distributor margin impact modelling for any pricing change across channels",
+    ],
+    costToServeLens: "Margin leakage is the cost discipline. Most brands lose 1-3% gross margin to inconsistent price-pack architecture without knowing it.",
+    exemplars: [
+      { name: "P&G India",         why: "Heavy MT presence, scaling QC, GT base — classic four-channel tension" },
+      { name: "Britannia",         why: "Biscuit category with extreme MT promo discounts disrupting GT price arch" },
+      { name: "Tata Consumer",     why: "Tea + foods across GT, MT, QC with pack-size proliferation" },
+    ],
+    sessionNote: "PwC RtM + pricing practice intersection is a natural joint play here. Clarynt brings the ground-truth outlet-level data that turns a category management recommendation into a spatially grounded decision.",
+  },
+  {
+    id: "F11",
+    name: "Trade Promotion Optimiser",
+    tagline: "15-25% of net sales going to GT promos, ROI invisible",
+    lever: "CST",
+    coreProblem: "Trade spends consume 15-25% of net sales in mature FMCG GT. ROI is invisible at scheme × outlet × SKU level. Promo design relies on broad heuristics — slab discount, free SKUs, distributor target schemes — without evidence on what actually moves throughput vs. what front-loads inventory.",
+    attributes: {
+      scale: "National established",
+      channel: "GT-dominant",
+      geography: "Pan-India",
+      category: "Any — high-promo categories most acute",
+      growthMode: "Profitable growth + cost discipline",
+      digital: "Partially modern",
+    },
+    proposition: [
+      "Scheme-level ROI attribution — what each promo construct actually delivered on incremental volume vs forward-buy",
+      "Promo construct design recommendation — slab vs flat vs free-SKU vs scheme-target by outlet type",
+      "Trade spend reallocation modelling — same budget, higher impact, across categories and geographies",
+      "Always-on promo evaluation, replacing post-hoc finance reconciliation with real-time decision support",
+    ],
+    costToServeLens: "Promo ROI is the cost discipline. The unstated truth is that 30-40% of trade spend is structurally non-incremental. The archetype is about finding the slice that is.",
+    exemplars: [
+      { name: "Marico",            why: "High-promo categories across hair oil and Saffola needing ROI clarity" },
+      { name: "Britannia",         why: "Biscuit category with structural promo dependence" },
+      { name: "Godrej Consumer",   why: "Multi-category promo book with no central ROI view" },
+    ],
+    sessionNote: "Easiest archetype to demonstrate value on quickly — a 90-day diagnostic can typically identify 8-12% of promo spend as non-incremental. Strong entry point for the joint proposition.",
+  },
+  {
+    id: "F12",
+    name: "Portfolio Regionaliser",
+    tagline: "One MSL across India leaves 8-12% volume on the table",
+    lever: "TFM",
+    coreProblem: "National brands run a single MSL with minor regional tweaks. The reality is regional preference variance is large enough that one MSL leaves 8-12% volume unrealised. Distinct from F9: F9 prunes a national tail; F12 varies the regional core. Hair oil mix in TN ≠ Bihar. Spice blend mix ≠ across zones. Namkeen format mix ≠ between West and North.",
+    attributes: {
+      scale: "National established",
+      channel: "GT-dominant",
+      geography: "Pan-India with regional variance",
+      category: "Categories with regional preference variance",
+      growthMode: "Extraction — regional core optimisation",
+      digital: "Partially modern to AI-native",
+    },
+    proposition: [
+      "Regional MSL scoring — what each zone's core 20-30 SKUs should actually be, evidenced by sell-out signals",
+      "Outlet-class × regional MSL combinations — A-class TN chemist ≠ A-class UP kirana",
+      "Regional NPD opportunity surfacing — gaps that the national portfolio underserves in specific zones",
+      "Regional planogram and shelf logic guidance grounded in catchment-level demand",
+    ],
+    costToServeLens: "The cost of one-size-fits-all is invisible until it is measured. Distributors carry SKUs that don't move in their zone; outlets stock heroes that aren't local heroes; the field force pushes assortment misaligned with demand.",
+    exemplars: [
+      { name: "Hindustan Unilever", why: "National portfolio with material regional preference variance across personal care" },
+      { name: "Dabur",              why: "Ayurvedic portfolio with classic regional skews (North vs South vs East)" },
+      { name: "Marico",             why: "Hair oil portfolio with very different regional mix (Parachute, Nihar, Hair & Care)" },
+    ],
+    sessionNote: "Distinct from F9. F9 is about which SKUs deserve to live at all; F12 is about which SKUs deserve to lead in each region. The two are complementary — pruning the national tail and varying the regional core often run together.",
+  },
+];
+
+const LEVER_META = {
+  EXP: { name: "Expansion",       color: "#E89522" },
+  EXT: { name: "Extraction",      color: "#F5A623" },
+  PRD: { name: "Productivity",    color: "#2D9E6B" },
+  CST: { name: "Cost",            color: "#E8185A" },
+  TFM: { name: "Transformation",  color: "#8B5CF6" },
+};
+
+const ATTR_AXES = [
+  { key: "scale",      label: "Scale" },
+  { key: "channel",    label: "Channel" },
+  { key: "geography",  label: "Geography" },
+  { key: "category",   label: "Category" },
+  { key: "growthMode", label: "Growth mode" },
+  { key: "digital",    label: "Digital" },
+];
+
+// ============================================================
+// MODULES (Right to Win — Clarynt module inventory)
+// ============================================================
+const MODULES_BASE = [
+  {
+    id: "mm-growth-modelling",
+    name: "MM Growth Modelling",
+    status: "live",
+    layer: ["Sense", "Reason"],
+    primaryLever: "EXP",
+    valueProp: "Sizes market potential at 30K+ micromarket grain. Surfaces demand whitespace before any field action. Where to play, sequenced by yield.",
+    archetypes: ["F1", "F6"],
+  },
+  {
+    id: "mm-reach-expansion",
+    name: "MM Reach Expansion",
+    status: "live",
+    layer: ["Sense"],
+    primaryLever: "EXP",
+    valueProp: "Outlet onboarding intelligence at micromarket level. Scores the next high-yield outlets balancing direct vs sub-distributor economics, urban and rural.",
+    archetypes: ["F1", "F3", "F5", "F6", "F7"],
+  },
+  {
+    id: "mm-asset-strategy",
+    name: "MM Asset Strategy",
+    status: "live",
+    layer: ["Sense", "Reason"],
+    primaryLever: "EXT",
+    valueProp: "Cooler, rack, and dispenser placement at outlet level. Asset ROI scored against catchment demand, footfall proximity, and outlet productivity.",
+    archetypes: ["F2"],
+  },
+  {
+    id: "mm-location-intelligence",
+    name: "MM Location Intelligence",
+    status: "live",
+    layer: ["Sense"],
+    primaryLever: "EXP",
+    valueProp: "Site-level scoring for new outlets, branches, and service centres. Demand density × competitor footprint × accessibility, at PIN-code grain.",
+    archetypes: ["F3", "F5", "F6"],
+  },
+  {
+    id: "mm-catchment-analysis",
+    name: "MM Catchment Analysis",
+    status: "live",
+    layer: ["Sense"],
+    primaryLever: "EXT",
+    valueProp: "Outlet-to-catchment matching. Aligns assortment, shelf, and call frequency with the actual demand polygon each outlet serves.",
+    archetypes: ["F1", "F2", "F3", "F4", "F5", "F7"],
+  },
+  {
+    id: "gtm-network-design",
+    name: "GTM & Network Design",
+    status: "live",
+    layer: ["Reason", "Act"],
+    primaryLever: "CST",
+    valueProp: "End-to-end distribution architecture — distributor footprint, beat geometry, salesperson coverage, cost-to-serve waterfall. Continuous, not annual.",
+    archetypes: ["F1", "F6", "F7", "F8"],
+  },
+  {
+    id: "key-outlet-engine",
+    name: "Key Outlet Engine",
+    status: "build",
+    layer: ["Reason", "Act"],
+    primaryLever: "EXT",
+    valueProp: "Identifies the top 10-15% of outlets by potential — not by current sales — and tunes call frequency, assortment, and incentives to extract them.",
+    archetypes: ["F2", "F3", "F8"],
+  },
+  {
+    id: "msl-engine",
+    name: "MSL Engine",
+    status: "build",
+    layer: ["Reason", "Act"],
+    primaryLever: "EXT",
+    valueProp: "Must-Stock-List at outlet-class × micromarket. Three engines (rule, geo-contagion, ML-feedback) blend into Must / Should / Nice / Drop tiers.",
+    archetypes: ["F8", "F9", "F12"],
+  },
+  {
+    id: "tpx-brain",
+    name: "TPx Brain",
+    status: "build",
+    layer: ["Reason"],
+    primaryLever: "CST",
+    valueProp: "Trade promotion ROI attribution and design recommendation across scheme constructs at outlet-class × SKU × geography level.",
+    archetypes: ["F11"],
+  },
+  {
+    id: "omnichannel-management",
+    name: "Omnichannel Management",
+    status: "build",
+    layer: ["Act", "Learn"],
+    primaryLever: "TFM",
+    valueProp: "Cross-channel decision plane for GT × MT × QC × EC orchestration in citadel cities. Channel prioritisation by pincode, leakage signals, differentiated assortment.",
+    archetypes: ["F4", "F10"],
+  },
+  {
+    id: "field-co-pilot",
+    name: "Field Co-Pilot",
+    status: "build",
+    layer: ["Act", "Learn"],
+    primaryLever: "PRD",
+    valueProp: "ASM and salesperson operator-plane interface. Route plans, daily call list, asset audits, incentive tracking, real-time alerts — over the canonical ontology.",
+    archetypes: ["F2", "F5", "F8"],
+  },
+  {
+    id: "channel-roi-builder",
+    name: "Channel ROI Builder",
+    status: "build",
+    layer: ["Reason"],
+    primaryLever: "PRD",
+    valueProp: "Channel-level economic modelling. Contribution per channel by SKU and outlet type. Sustainability assessment. Mix optimisation recommendations.",
+    archetypes: ["F11"],
+  },
+  {
+    id: "portfolio-oracle",
+    name: "Portfolio Oracle",
+    status: "build",
+    layer: ["Reason"],
+    primaryLever: "CST",
+    valueProp: "SKU × outlet × channel productivity matrix. Surfaces tail SKUs eroding distributor working capital. Tells you where each SKU truly earns its place.",
+    archetypes: ["F9", "F10", "F12"],
+  },
+  {
+    id: "rgm",
+    name: "RGM",
+    status: "build",
+    layer: ["Reason"],
+    primaryLever: "EXT",
+    valueProp: "Revenue growth management. Pack-price architecture, retailer-loyalty programs, revenue-lever orchestration — grounded in outlet-level economics.",
+    archetypes: ["F12"],
+  },
+  {
+    id: "in-store-excellence",
+    name: "In-Store Excellence",
+    status: "build",
+    layer: ["Act"],
+    primaryLever: "EXT",
+    valueProp: "Merchandising, planogramming, and shelf-execution scoring. Photo-audit and recommendation feedback loops to the field force.",
+    archetypes: ["F9"],
+  },
+  {
+    id: "demand-forecasting",
+    name: "Demand Forecasting",
+    status: "build",
+    layer: ["Sense", "Reason"],
+    primaryLever: "TFM",
+    valueProp: "Micromarket-grain demand forecasting. Fuses macro signals — income events, agri cycle, monsoon, shocks — with local execution signals.",
+    archetypes: ["F4", "F12"],
+  },
+  {
+    id: "ppa",
+    name: "PPA",
+    status: "build",
+    layer: ["Reason"],
+    primaryLever: "TFM",
+    valueProp: "Price-pack architecture guardrails across GT × MT × QC × EC. Flags margin leakage, pack-size arbitrage, and consumer confusion zones.",
+    archetypes: ["F4", "F10"],
+  },
+  {
+    id: "npd-engine",
+    name: "NPD Engine",
+    status: "build",
+    layer: ["Reason"],
+    primaryLever: "TFM",
+    valueProp: "Portfolio gap identification and NPD opportunity surfacing using regional preference variance and category whitespace analysis.",
+    archetypes: ["F12"],
+  },
+  {
+    id: "market-mix-modelling",
+    name: "Market Mix Modelling",
+    status: "build",
+    layer: ["Reason"],
+    primaryLever: "TFM",
+    valueProp: "Marketing investment attribution and mix optimisation grounded in micromarket-level execution and demand signals.",
+    archetypes: [],
+  },
+];
+
+const LAYER_META = {
+  "Sense":  { color: "#8A8A8A" },
+  "Reason": { color: "#E89522" },
+  "Act":    { color: "#E8185A" },
+  "Learn":  { color: "#8B5CF6" },
+};
+
+// ============================================================
+// CONFIG (per-browser, stored in localStorage)
+// ============================================================
+const SETTINGS_KEY = "clarynt_pwc_settings_v1";
+let SETTINGS = loadSettings();
+
+function loadSettings() {
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch { return {}; }
+}
+function saveSettings() {
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(SETTINGS));
+}
+
+// ============================================================
+// STATE + NETWORK LAYER
+// ============================================================
+const SCHEMA_VERSION = 2; // sheet-backed
+
+let STATE = emptyState();
+let CONNECTION_STATE = "connecting";    // 'connecting' | 'connected' | 'disconnected'
+let LAST_FETCH_AT = null;
+let POLL_INTERVAL_MS = 5000;
+let POLL_TIMER = null;
+let FOCUSED_FIELD = null;                // currently-focused editable element (don't clobber on poll)
+let TMP_COUNTER = 0;                     // for temp client IDs before server assigns one
+let PENDING_WRITES = 0;                  // outstanding network writes (suppress poll merges briefly)
+
+function emptyState() {
+  const overlays = {};
+  ARCHETYPES_FMCG_BASE.forEach(a => {
+    overlays[a.id] = { priority: false, sessionNoteUser: "", clients: [], exemplars: null };
+  });
+  const moduleOverlays = {};
+  MODULES_BASE.forEach(m => {
+    moduleOverlays[m.id] = { note: "" };
+  });
+  return { overlays, moduleOverlays, userArchetypes: [] };
+}
+
+// ---- API call helper ----
+async function api(action, body = {}) {
+  if (!SETTINGS.appsScriptUrl) throw new Error("No Apps Script URL configured");
+  PENDING_WRITES++;
+  try {
+    const res = await fetch(SETTINGS.appsScriptUrl, {
+      method: "POST",
+      // text/plain avoids CORS preflight, which Apps Script doesn't handle
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action, edited_by: SETTINGS.userName, ...body }),
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || "API error");
+    setConnectionState("connected");
+    return data;
+  } catch (err) {
+    setConnectionState("disconnected");
+    showToast("Save failed", "error");
+    console.error("api(" + action + ") failed:", err);
+    throw err;
+  } finally {
+    PENDING_WRITES--;
+  }
+}
+
+// ---- Fetch all data from sheet ----
+async function fetchAllFromSheet() {
+  if (!SETTINGS.appsScriptUrl) throw new Error("No Apps Script URL configured");
+  try {
+    const res = await fetch(SETTINGS.appsScriptUrl, { method: "GET", redirect: "follow" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || "Fetch error");
+    LAST_FETCH_AT = data.fetched_at || new Date().toISOString();
+    setConnectionState("connected");
+    return data;
+  } catch (err) {
+    setConnectionState("disconnected");
+    console.error("fetchAllFromSheet failed:", err);
+    throw err;
+  }
+}
+
+// ---- Reshape sheet rows into STATE ----
+function applyServerData(serverData) {
+  const next = emptyState();
+
+  // user_archetypes → next.userArchetypes + init overlays
+  // (Must run BEFORE archetype_edits and clients so their overlay lookups succeed.)
+  (serverData.user_archetypes || []).forEach(row => {
+    let attrs = {};
+    let prop = [];
+    try { attrs = typeof row.attributes === "string" ? JSON.parse(row.attributes) : (row.attributes || {}); } catch { attrs = {}; }
+    try { prop  = typeof row.proposition === "string" ? JSON.parse(row.proposition) : (row.proposition || []); } catch { prop = []; }
+    if (!Array.isArray(prop) || prop.length === 0) prop = [""];
+    next.userArchetypes.push({
+      id: row.id,
+      name: row.name || "",
+      tagline: row.tagline || "",
+      lever: row.lever || "EXP",
+      attributes: attrs && typeof attrs === "object" ? attrs : {},
+      coreProblem: row.coreProblem || "",
+      proposition: prop,
+      costToServeLens: row.costToServeLens || "",
+      added_by: row.added_by,
+    });
+    if (!next.overlays[row.id]) {
+      next.overlays[row.id] = { priority: false, sessionNoteUser: "", clients: [], exemplars: null };
+    }
+  });
+
+  // archetype_edits → overlays
+  (serverData.archetype_edits || []).forEach(row => {
+    const aid = row.archetype_id;
+    if (!next.overlays[aid]) return; // unknown archetype, ignore
+    let value = row.value;
+    if (row.field === "priority") value = value === "true" || value === true;
+    if (row.field === "exemplars") {
+      try { value = JSON.parse(value); } catch { value = null; }
+    }
+    if (row.field === "name")             next.overlays[aid].name = value;
+    else if (row.field === "tagline")     next.overlays[aid].tagline = value;
+    else if (row.field === "priority")    next.overlays[aid].priority = value;
+    else if (row.field === "sessionNoteUser") next.overlays[aid].sessionNoteUser = value;
+    else if (row.field === "exemplars")   next.overlays[aid].exemplars = value;
+  });
+
+  // module_edits → moduleOverlays
+  (serverData.module_edits || []).forEach(row => {
+    const mid = row.module_id;
+    if (!next.moduleOverlays[mid]) return;
+    if (row.field === "name")       next.moduleOverlays[mid].name = row.value;
+    else if (row.field === "status")    next.moduleOverlays[mid].status = row.value;
+    else if (row.field === "valueProp") next.moduleOverlays[mid].valueProp = row.value;
+    else if (row.field === "note")      next.moduleOverlays[mid].note = row.value;
+  });
+
+  // clients → overlays[aid].clients
+  (serverData.clients || []).forEach(row => {
+    const aid = row.archetype_id;
+    if (!next.overlays[aid]) return;
+    next.overlays[aid].clients.push({
+      id: row.id,
+      name: row.name,
+      tier: row.tier || "target",
+      note: row.note || "",
+      added_by: row.added_by,
+    });
+  });
+
+  STATE = next;
+}
+
+// ---- Connection state UI ----
+function setConnectionState(state) {
+  CONNECTION_STATE = state;
+  const ind = document.getElementById("conn-indicator");
+  const txt = document.getElementById("conn-text");
+  if (!ind || !txt) return;
+  ind.dataset.state = state;
+  if (state === "connecting") txt.textContent = "connecting…";
+  else if (state === "connected") {
+    const t = LAST_FETCH_AT ? new Date(LAST_FETCH_AT) : new Date();
+    txt.textContent = "live · synced " + relativeTime(t);
+  }
+  else if (state === "disconnected") txt.textContent = "offline — reconnecting…";
+
+  // Show user name
+  if (SETTINGS.userName) {
+    document.getElementById("conn-sep").style.display = "inline-block";
+    const u = document.getElementById("conn-user");
+    u.style.display = "inline";
+    u.textContent = SETTINGS.userName;
+  }
+}
+
+function relativeTime(d) {
+  const sec = Math.floor((Date.now() - d.getTime()) / 1000);
+  if (sec < 5) return "just now";
+  if (sec < 60) return sec + "s ago";
+  if (sec < 3600) return Math.floor(sec / 60) + "m ago";
+  return Math.floor(sec / 3600) + "h ago";
+}
+
+// Refresh the "synced Ns ago" badge every few seconds
+setInterval(() => {
+  if (CONNECTION_STATE === "connected") setConnectionState("connected");
+}, 3000);
+
+// ---- Accessors ----
+// getArchetype returns a flattened view: base/user record + overlay edits.
+// For BASE archetypes, source comes from ARCHETYPES_FMCG_BASE.
+// For USER archetypes (F13+), source comes from STATE.userArchetypes.
+// Overlay fields (priority, sessionNoteUser, clients, exemplars) work the same for both.
+function getArchetype(id) {
+  const base = ARCHETYPES_FMCG_BASE.find(a => a.id === id);
+  const user = base ? null : STATE.userArchetypes.find(a => a.id === id);
+  const source = base || user;
+  if (!source) return null;
+  const overlay = STATE.overlays[id] || {};
+  return {
+    ...source,
+    // User archetypes don't have a built-in sessionNote — coerce to empty string
+    sessionNote: source.sessionNote || "",
+    // User archetypes default to empty exemplars (no preset list)
+    exemplars: source.exemplars || [],
+    // User archetypes always have a proposition array — default to [""] for editing
+    proposition: source.proposition && source.proposition.length ? source.proposition : [""],
+    attributes: source.attributes || {},
+    // Overlay-path fields take precedence
+    ...(overlay.name      ? { name:      overlay.name }      : {}),
+    ...(overlay.tagline   ? { tagline:   overlay.tagline }   : {}),
+    ...(overlay.exemplars ? { exemplars: overlay.exemplars } : {}),
+    priority:        overlay.priority || false,
+    sessionNoteUser: overlay.sessionNoteUser || "",
+    clients:         overlay.clients || [],
+    isUserArchetype: !!user,
+  };
+}
+
+function getAllArchetypes() {
+  return [
+    ...ARCHETYPES_FMCG_BASE.map(b => getArchetype(b.id)),
+    ...STATE.userArchetypes.map(u => getArchetype(u.id)),
+  ].filter(Boolean);
+}
+
+function isUserArchetype(id) {
+  return !ARCHETYPES_FMCG_BASE.some(a => a.id === id);
+}
+
+// ---- Mutation helpers (each fires a network write) ----
+function pushArchetypeEdit(archetype_id, field, value) {
+  // Optimistic local update
+  if (!STATE.overlays[archetype_id]) STATE.overlays[archetype_id] = {};
+  STATE.overlays[archetype_id][field] = value;
+  // Async push
+  api("upsert_archetype_edit", { archetype_id, field, value }).catch(() => {});
+  showToast("Saved");
+}
+
+function pushModuleEdit(module_id, field, value) {
+  if (!STATE.moduleOverlays[module_id]) STATE.moduleOverlays[module_id] = {};
+  STATE.moduleOverlays[module_id][field] = value;
+  api("upsert_module_edit", { module_id, field, value }).catch(() => {});
+  showToast("Saved");
+}
+
+// Module helpers
+function getModule(id) {
+  const base = MODULES_BASE.find(m => m.id === id);
+  if (!base) return null;
+  const overlay = STATE.moduleOverlays[id] || {};
+  return {
+    ...base,
+    ...(overlay.name        ? { name:        overlay.name }        : {}),
+    ...(overlay.status      ? { status:      overlay.status }      : {}),
+    ...(overlay.valueProp   ? { valueProp:   overlay.valueProp }   : {}),
+    note: overlay.note || "",
+  };
+}
+
+function getAllModules() {
+  return MODULES_BASE.map(m => getModule(m.id));
+}
+
+// Back-compat alias used by drawer code (legacy "updateOverlay" / "updateModuleOverlay")
+function updateOverlay(id, patch) {
+  Object.entries(patch).forEach(([field, value]) => {
+    pushArchetypeEdit(id, field, value);
+  });
+}
+function updateModuleOverlay(id, patch) {
+  Object.entries(patch).forEach(([field, value]) => {
+    pushModuleEdit(id, field, value);
+  });
+}
+
+function showToast(msg, kind) {
+  const t = document.getElementById("toast");
+  document.getElementById("toast-msg").textContent = msg;
+  t.classList.add("show");
+  if (kind === "error") t.style.background = "var(--rose)";
+  else t.style.background = "";
+  clearTimeout(showToast._tid);
+  showToast._tid = setTimeout(() => t.classList.remove("show"), 1400);
+}
+
+// Generic debounce — used for user-archetype field persistence
+function debounce(fn, ms) {
+  let t = null;
+  return (...args) => {
+    if (t) clearTimeout(t);
+    t = setTimeout(() => fn(...args), ms);
+  };
+}
+
+// Persist a user-archetype's core fields (full-payload rewrite to the user_archetypes tab).
+// Debounced 400ms so typing into the lever/coreProblem/attribute/etc. inputs doesn't
+// flood the server with one write per keystroke. Note: does NOT route through
+// pushArchetypeEdit / archetype_edits — that's for overlay edits to base archetypes.
+const persistUserArchetype = debounce((id) => {
+  const u = STATE.userArchetypes.find(x => x.id === id);
+  if (!u) return;
+  api("update_user_archetype", {
+    id,
+    name: u.name,
+    tagline: u.tagline,
+    lever: u.lever,
+    attributes: u.attributes,
+    coreProblem: u.coreProblem,
+    proposition: u.proposition,
+    costToServeLens: u.costToServeLens,
+  }).catch(() => {});
+}, 400);
+
+// ============================================================
+// FILTERS
+// ============================================================
+// Seven attribute axes plus a flag set. Lever and flag use exact-match; the six
+// attribute axes use case-insensitive substring matching against the archetype's
+// attribute string for that axis. Substring matching is what lets a "Rural-deepening"
+// chip match both "Rural-deepening" and "Rural-deepening within home market".
+const FILTERS = {
+  lever:      new Set(),
+  scale:      new Set(),
+  channel:    new Set(),
+  geography:  new Set(),
+  category:   new Set(),
+  growthMode: new Set(),
+  digital:    new Set(),
+  flag:       new Set(),
+};
+const RTW_FILTERS = { status: new Set(), lever: new Set() };
+
+// Which axes use substring-against-attribute matching
+const ATTR_FILTER_AXES = ["scale", "channel", "geography", "category", "growthMode", "digital"];
+
+function matchesFilters(a) {
+  // Lever — exact match against a.lever
+  if (FILTERS.lever.size && !FILTERS.lever.has(a.lever)) return false;
+
+  // Six attribute axes — substring match (chip values are canonical, attribute strings vary)
+  for (const axis of ATTR_FILTER_AXES) {
+    const sel = FILTERS[axis];
+    if (!sel.size) continue;
+    const val = (a.attributes && a.attributes[axis] ? String(a.attributes[axis]) : "").toLowerCase();
+    let matched = false;
+    for (const chipVal of sel) {
+      if (val.includes(String(chipVal).toLowerCase())) { matched = true; break; }
+    }
+    if (!matched) return false;
+  }
+
+  // Flag chips — Prioritised only / With clients
+  if (FILTERS.flag.has("priority") && !a.priority) return false;
+  if (FILTERS.flag.has("mapped") && (!a.clients || a.clients.length === 0)) return false;
+
+  return true;
+}
+
+// Count of selected axis filters (excludes flag chips, since they're a separate inline UX)
+function countAxisFilters() {
+  return Object.entries(FILTERS).reduce(
+    (sum, [k, set]) => k === "flag" ? sum : sum + set.size,
+    0
+  );
+}
+
+function updateFiltersCountBadge() {
+  const n = countAxisFilters();
+  const badge = document.getElementById("filters-count");
+  if (!badge) return;
+  if (n === 0) { badge.hidden = true; badge.textContent = "0"; }
+  else         { badge.hidden = false; badge.textContent = String(n); }
+}
+
+function attachFilterHandlers() {
+  // Toggle the collapsible filters panel open/closed
+  const toggle = document.getElementById("filters-toggle");
+  const panel  = document.getElementById("filters-panel");
+  if (toggle && panel) {
+    toggle.addEventListener("click", () => {
+      const open = panel.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
+  // Chip clicks — axis chips inside the panel + inline flag chips in the toolbar
+  const allChips = document.querySelectorAll(
+    "#filters-panel .chip, #filter-bar .chip[data-filter='flag']"
+  );
+  allChips.forEach(chip => {
+    chip.addEventListener("click", () => {
+      const f = chip.dataset.filter, v = chip.dataset.val;
+      if (!FILTERS[f]) return;
+      if (FILTERS[f].has(v)) FILTERS[f].delete(v);
+      else FILTERS[f].add(v);
+      chip.classList.toggle("active");
+      updateFiltersCountBadge();
+      renderGrid();
+    });
+  });
+
+  // Clear all
+  const reset = document.getElementById("filter-reset");
+  if (reset) {
+    reset.addEventListener("click", (e) => {
+      e.preventDefault();
+      Object.values(FILTERS).forEach(set => set.clear());
+      document.querySelectorAll(
+        "#filters-panel .chip.active, #filter-bar .chip.active"
+      ).forEach(c => c.classList.remove("active"));
+      updateFiltersCountBadge();
+      renderGrid();
+    });
+  }
+}
+
+// ============================================================
+// GRID RENDER
+// ============================================================
+function renderGrid() {
+  const grid = document.getElementById("grid-view");
+  const items = getAllArchetypes().filter(matchesFilters);
+
+  // Add tile is always appended after whatever passes the filters, even if zero cards match.
+  // (Filters never affect the Add tile — you can always add a new archetype.)
+  const addTileHtml = `
+    <article class="card card-add" id="add-archetype-tile" role="button" aria-label="Add a new archetype">
+      <div class="card-add-plus">+</div>
+      <div class="card-add-label">Add archetype</div>
+      <div class="card-add-hint">Beyond F1–F12</div>
+    </article>
+  `;
+
+  if (items.length === 0) {
+    grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 80px 20px; color: var(--ink-muted);">
+      <div style="font-family: var(--font-display); font-size: 20px; color: var(--ink); margin-bottom: 6px;">No archetypes match these filters</div>
+      <div style="font-size: 13px; font-style: italic;">Try clearing one or more filters above</div>
+    </div>` + addTileHtml;
+    const addTile = document.getElementById("add-archetype-tile");
+    if (addTile) addTile.addEventListener("click", createNewArchetype);
+    return;
+  }
+
+  grid.innerHTML = items.map(a => {
+    const clientCount = a.clients.length;
+    const lev = LEVER_META[a.lever] || LEVER_META.EXP;
+    const userMark = a.isUserArchetype ? ` <span class="card-user-mark" title="User-added">+</span>` : "";
+    const displayName = a.name
+      ? escapeHtml(a.name)
+      : `<span style="color:var(--ink-faint); font-style:italic;">Untitled archetype</span>`;
+    return `
+      <article class="card" data-id="${a.id}" data-lever="${a.lever}"${a.isUserArchetype ? ' data-user="1"' : ""}>
+        <div class="card-header">
+          <span class="card-id">${a.id}${userMark}</span>
+          <div class="card-actions">
+            <button class="priority-flag ${a.priority ? "on" : ""}" data-action="toggle-priority" aria-label="Toggle priority">
+              ${a.priority ? STAR_FILLED : STAR_OUTLINE}
+            </button>
+            <span class="lever-pill">${a.lever}</span>
+          </div>
+        </div>
+        <div class="card-name">${displayName}</div>
+        <div class="card-tagline">${escapeHtml(a.tagline)}</div>
+        <div class="card-client-count">
+          <span>${lev.name}</span>
+          <span>${clientCount > 0
+            ? `<span class="count-num">${clientCount}</span> client${clientCount === 1 ? "" : "s"} mapped`
+            : `<span class="empty">no clients yet</span>`}</span>
+        </div>
+      </article>
+    `;
+  }).join("") + addTileHtml;
+
+  grid.querySelectorAll(".card:not(.card-add)").forEach(card => {
+    card.addEventListener("click", (e) => {
+      if (e.target.closest(".priority-flag")) return; // handled separately
+      openDrawer(card.dataset.id);
+    });
+    card.querySelector(".priority-flag").addEventListener("click", (e) => {
+      e.stopPropagation();
+      const id = card.dataset.id;
+      const a = getArchetype(id);
+      updateOverlay(id, { priority: !a.priority });
+      renderGrid();
+      updateSessionStats();
+    });
+  });
+
+  // Wire the Add tile (always present)
+  const addTile = document.getElementById("add-archetype-tile");
+  if (addTile) addTile.addEventListener("click", createNewArchetype);
+}
+
+// Create a new user-added archetype (F13+).
+// Computes the next free F-ID, builds an empty stub, pushes optimistically into
+// local state, fires insert_user_archetype on the server, then opens the drawer
+// in edit mode so the user can fill it in.
+function createNewArchetype() {
+  const all = [...ARCHETYPES_FMCG_BASE, ...STATE.userArchetypes];
+  const maxNum = all.reduce((max, a) => {
+    const m = /^F(\d+)$/.exec(a.id);
+    return m ? Math.max(max, parseInt(m[1], 10)) : max;
+  }, 12); // floor 12 — next is at least F13
+  const newId = "F" + (maxNum + 1);
+
+  const stub = {
+    id: newId,
+    name: "",
+    tagline: "",
+    lever: "EXP",
+    attributes: { scale: "", channel: "", geography: "", category: "", growthMode: "", digital: "" },
+    coreProblem: "",
+    proposition: [""],
+    costToServeLens: "",
+  };
+
+  // Optimistic local push — MUST happen before openDrawer (which calls getArchetype)
+  STATE.userArchetypes.push(stub);
+  STATE.overlays[newId] = { priority: false, sessionNoteUser: "", clients: [], exemplars: null };
+
+  // Server insert (fire-and-forget; failure surfaces via toast in api())
+  api("insert_user_archetype", {
+    id: newId,
+    name: stub.name,
+    tagline: stub.tagline,
+    lever: stub.lever,
+    attributes: stub.attributes,
+    coreProblem: stub.coreProblem,
+    proposition: stub.proposition,
+    costToServeLens: stub.costToServeLens,
+  }).catch(() => {});
+
+  renderGrid();
+  openDrawer(newId);
+  updateSessionStats();
+}
+
+// ============================================================
+// DRAWER (per-archetype detail)
+// ============================================================
+let CURRENT_DRAWER_ID = null;
+
+function openDrawer(id) {
+  CURRENT_DRAWER_ID = id;
+  const a = getArchetype(id);
+  if (!a) return;
+  const lev = LEVER_META[a.lever] || LEVER_META.EXP;
+  const isUser = !!a.isUserArchetype;
+
+  // Lever indicator — static pill for base, <select> for user archetypes
+  const leverHtml = isUser
+    ? `<select class="drawer-lever-select" id="dr-lever" style="background:${lev.color}">
+         ${Object.entries(LEVER_META).map(([code, meta]) =>
+           `<option value="${code}" ${code === a.lever ? "selected" : ""}>${code} — ${meta.name}</option>`
+         ).join("")}
+       </select>`
+    : `<span class="drawer-lever" style="background:${lev.color}">${a.lever}</span>`;
+
+  // Core growth problem
+  const coreProblemHtml = isUser
+    ? `<textarea class="user-arch-textarea problem-text" id="dr-core-problem" placeholder="What's the central growth problem this archetype faces?">${escapeHtml(a.coreProblem)}</textarea>`
+    : `<p class="problem-text">${escapeHtml(a.coreProblem)}</p>`;
+
+  // Attribute grid — each cell value editable for user archetypes
+  const attrGridHtml = ATTR_AXES.map(ax => {
+    const v = a.attributes[ax.key] || "";
+    const cellValueHtml = isUser
+      ? `<input class="attribute-value user-arch-input" data-axis="${ax.key}" value="${escapeAttr(v)}" placeholder="—" />`
+      : `<div class="attribute-value">${escapeHtml(v || "—")}</div>`;
+    return `
+      <div class="attribute-cell">
+        <div class="attribute-name">${ax.label}</div>
+        ${cellValueHtml}
+      </div>
+    `;
+  }).join("");
+
+  // Proposition — editable list + add line button for user archetypes
+  const propositionHtml = isUser
+    ? `
+        <div class="proposition-list" id="dr-proposition-list">
+          ${a.proposition.map((p, i) => renderUserPropRow(p, i)).join("")}
+        </div>
+        <button class="exemplar-add" id="dr-prop-add" type="button">+ add proposition line</button>
+      `
+    : `
+        <div class="proposition-list">
+          ${a.proposition.map((p, i) => `
+            <div class="prop-item">
+              <span class="num">${String(i + 1).padStart(2, "0")}</span>
+              <span>${escapeHtml(p)}</span>
+            </div>
+          `).join("")}
+        </div>
+      `;
+
+  // Cost-to-serve / productivity lens
+  const ctsHtml = isUser
+    ? `<textarea class="user-arch-textarea cts-lens" id="dr-cts" placeholder="What's the cost-to-serve or productivity lens for this archetype?">${escapeHtml(a.costToServeLens)}</textarea>`
+    : `<div class="cts-lens">${escapeHtml(a.costToServeLens)}</div>`;
+
+  // Footer — Reset for base, Delete for user
+  const footerHtml = isUser
+    ? `<button class="btn btn-warn" id="dr-delete" type="button">Delete this archetype</button>`
+    : `<button class="btn btn-warn" id="dr-reset" type="button">Reset this archetype to default</button>`;
+
+  // User-added marker next to the ID
+  const userMark = isUser ? ` <span class="drawer-user-mark" title="User-added">+</span>` : "";
+
+  const drawer = document.getElementById("drawer");
+  drawer.innerHTML = `
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">
+          <span class="drawer-id">${a.id}${userMark}</span>
+          ${leverHtml}
+        </div>
+        <input class="drawer-name" id="dr-name" value="${escapeAttr(a.name)}" placeholder="${isUser ? "Archetype name" : ""}" />
+        <input class="drawer-tagline" id="dr-tagline" value="${escapeAttr(a.tagline)}" placeholder="${isUser ? "Tagline (one line)" : ""}" />
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
+        <button class="drawer-close" id="dr-close">${XICON}</button>
+        <button class="drawer-priority ${a.priority ? "on" : ""}" id="dr-priority">
+          ${a.priority ? STAR_FILLED : STAR_OUTLINE} ${a.priority ? "Prioritised" : "Mark priority"}
+        </button>
+      </div>
+    </div>
+
+    <div class="drawer-body">
+
+      <section class="section">
+        <div class="section-label${isUser ? " editable" : ""}"><span class="marker"></span>Core growth problem</div>
+        ${coreProblemHtml}
+      </section>
+
+      <section class="section">
+        <div class="section-label${isUser ? " editable" : ""}"><span class="marker"></span>Attribute position</div>
+        <div class="attribute-grid">
+          ${attrGridHtml}
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-label${isUser ? " editable" : ""}"><span class="marker"></span>Clarynt proposition</div>
+        ${propositionHtml}
+      </section>
+
+      <section class="section">
+        <div class="section-label${isUser ? " editable" : ""}"><span class="marker"></span>Cost-to-serve / productivity lens</div>
+        ${ctsHtml}
+      </section>
+
+      <section class="section">
+        <div class="section-label editable"><span class="marker"></span>Exemplar companies — editable</div>
+        <div class="exemplars-list" id="dr-exemplars">
+          ${a.exemplars.map((e, i) => renderExemplarRow(e, i)).join("")}
+        </div>
+        <button class="exemplar-add" id="dr-exemplar-add">+ add exemplar</button>
+      </section>
+
+      <section class="section">
+        <div class="section-label editable"><span class="marker"></span>Your clients here</div>
+        <div class="clients-section">
+          <div class="clients-header">
+            <div class="clients-title">Client mapping</div>
+            <div class="clients-count">${a.clients.length} mapped</div>
+          </div>
+          <div id="dr-clients">
+            ${a.clients.length === 0
+              ? `<div class="clients-empty" style="padding: 20px 0; text-align: center; color: var(--ink-faint); font-style: italic; font-size: 13px;">No clients mapped to this archetype yet.</div>`
+              : a.clients.map((c, i) => renderClientRow(c, i)).join("")}
+          </div>
+          <button class="client-add" id="dr-client-add">+ Add a client to this archetype</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-label editable"><span class="marker"></span>Session notes</div>
+        ${a.sessionNote ? `
+          <div class="session-note-built-in">
+            <span class="label">From framework</span>
+            ${escapeHtml(a.sessionNote)}
+          </div>
+        ` : ""}
+        <textarea class="session-notes-area" id="dr-notes" placeholder="Add your own notes from the working session — observations, debates, reframings...">${escapeHtml(a.sessionNoteUser)}</textarea>
+      </section>
+
+      <div class="drawer-footer-actions">
+        ${footerHtml}
+      </div>
+
+    </div>
+  `;
+
+  // Open
+  drawer.classList.add("open");
+  document.getElementById("drawer-backdrop").classList.add("open");
+  document.body.style.overflow = "hidden";
+
+  attachDrawerHandlers();
+}
+
+// Renders one editable proposition row for user-added archetypes
+function renderUserPropRow(p, i) {
+  return `
+    <div class="prop-item-edit" data-idx="${i}">
+      <span class="num">${String(i + 1).padStart(2, "0")}</span>
+      <input class="user-arch-input prop-edit" value="${escapeAttr(p)}" placeholder="Proposition line" />
+      <button class="prop-remove" data-action="remove-prop" type="button" title="Remove">remove</button>
+    </div>
+  `;
+}
+
+function renderExemplarRow(e, i) {
+  return `
+    <div class="exemplar-row" data-idx="${i}">
+      <input class="exemplar-name" value="${escapeAttr(e.name)}" placeholder="Company" />
+      <input class="exemplar-why" value="${escapeAttr(e.why)}" placeholder="Why this archetype" />
+      <button class="exemplar-remove" data-action="remove-exemplar">remove</button>
+    </div>
+  `;
+}
+
+function renderClientRow(c, i) {
+  const idAttr = c.id    ? `data-cid="${c.id}"` : "";
+  const tmpAttr = c.tmpId ? `data-tmp="${c.tmpId}"` : "";
+  return `
+    <div class="client-row" data-idx="${i}" ${idAttr} ${tmpAttr}>
+      <input class="client-name" value="${escapeAttr(c.name)}" placeholder="Client name" />
+      <select class="client-tier" data-tier="${c.tier || "target"}">
+        <option value="current"      ${c.tier === "current" ? "selected" : ""}>Current</option>
+        <option value="target"       ${(!c.tier || c.tier === "target") ? "selected" : ""}>Target</option>
+        <option value="aspirational" ${c.tier === "aspirational" ? "selected" : ""}>Aspirational</option>
+      </select>
+      <input class="client-note" value="${escapeAttr(c.note || "")}" placeholder="Note (optional)" />
+      <button class="client-remove" data-action="remove-client" title="Remove">×</button>
+    </div>
+  `;
+}
+
+function attachDrawerHandlers() {
+  const id = CURRENT_DRAWER_ID;
+  const isUser = isUserArchetype(id);
+
+  document.getElementById("dr-close").addEventListener("click", closeDrawer);
+
+  // Name and tagline — different persistence path for user archetypes (they
+  // rewrite the user_archetypes row, not archetype_edits).
+  if (isUser) {
+    document.getElementById("dr-name").addEventListener("input", (e) => {
+      const u = STATE.userArchetypes.find(x => x.id === id);
+      if (!u) return;
+      u.name = e.target.value;
+      persistUserArchetype(id);
+      renderGrid();
+    });
+    document.getElementById("dr-tagline").addEventListener("input", (e) => {
+      const u = STATE.userArchetypes.find(x => x.id === id);
+      if (!u) return;
+      u.tagline = e.target.value;
+      persistUserArchetype(id);
+      renderGrid();
+    });
+
+    // Lever picker
+    document.getElementById("dr-lever").addEventListener("change", (e) => {
+      const u = STATE.userArchetypes.find(x => x.id === id);
+      if (!u) return;
+      u.lever = e.target.value;
+      const meta = LEVER_META[u.lever];
+      if (meta) e.target.style.background = meta.color;
+      persistUserArchetype(id);
+      renderGrid();
+    });
+
+    // Core growth problem
+    document.getElementById("dr-core-problem").addEventListener("input", (e) => {
+      const u = STATE.userArchetypes.find(x => x.id === id);
+      if (!u) return;
+      u.coreProblem = e.target.value;
+      persistUserArchetype(id);
+    });
+
+    // Cost-to-serve / productivity lens
+    document.getElementById("dr-cts").addEventListener("input", (e) => {
+      const u = STATE.userArchetypes.find(x => x.id === id);
+      if (!u) return;
+      u.costToServeLens = e.target.value;
+      persistUserArchetype(id);
+    });
+
+    // Attribute cells — six inputs, each tagged with data-axis
+    document.querySelectorAll("#drawer .attribute-value.user-arch-input").forEach(input => {
+      input.addEventListener("input", () => {
+        const u = STATE.userArchetypes.find(x => x.id === id);
+        if (!u) return;
+        if (!u.attributes) u.attributes = {};
+        u.attributes[input.dataset.axis] = input.value;
+        persistUserArchetype(id);
+      });
+    });
+
+    // Proposition list — typing, add, remove
+    const propList = document.getElementById("dr-proposition-list");
+    const syncPropFromDom = () => {
+      const u = STATE.userArchetypes.find(x => x.id === id);
+      if (!u) return;
+      const rows = propList.querySelectorAll(".prop-item-edit .prop-edit");
+      u.proposition = Array.from(rows).map(r => r.value);
+      if (u.proposition.length === 0) u.proposition = [""]; // keep at least one editable line
+      persistUserArchetype(id);
+    };
+    propList.addEventListener("input", (e) => {
+      if (e.target.classList.contains("prop-edit")) syncPropFromDom();
+    });
+    propList.addEventListener("click", (e) => {
+      if (e.target.dataset.action !== "remove-prop") return;
+      const row = e.target.closest(".prop-item-edit");
+      if (!row) return;
+      row.remove();
+      // Renumber visible rows
+      propList.querySelectorAll(".prop-item-edit").forEach((r, idx) => {
+        r.dataset.idx = idx;
+        const numEl = r.querySelector(".num");
+        if (numEl) numEl.textContent = String(idx + 1).padStart(2, "0");
+      });
+      syncPropFromDom();
+    });
+    document.getElementById("dr-prop-add").addEventListener("click", () => {
+      const newIdx = propList.querySelectorAll(".prop-item-edit").length;
+      propList.insertAdjacentHTML("beforeend", renderUserPropRow("", newIdx));
+      const last = propList.lastElementChild.querySelector(".prop-edit");
+      if (last) last.focus();
+      syncPropFromDom();
+    });
+  } else {
+    document.getElementById("dr-name").addEventListener("input", (e) => {
+      updateOverlay(id, { name: e.target.value });
+    });
+    document.getElementById("dr-tagline").addEventListener("input", (e) => {
+      updateOverlay(id, { tagline: e.target.value });
+    });
+  }
+
+  // Priority, session notes, exemplars, clients — same for base and user archetypes
+  document.getElementById("dr-priority").addEventListener("click", () => {
+    const a = getArchetype(id);
+    updateOverlay(id, { priority: !a.priority });
+    openDrawer(id); // re-render drawer
+    renderGrid();
+    updateSessionStats();
+  });
+
+  document.getElementById("dr-notes").addEventListener("input", (e) => {
+    updateOverlay(id, { sessionNoteUser: e.target.value });
+  });
+
+  // Exemplars
+  document.getElementById("dr-exemplars").addEventListener("input", (e) => {
+    if (e.target.classList.contains("exemplar-name") || e.target.classList.contains("exemplar-why")) {
+      saveExemplars();
+    }
+  });
+  document.getElementById("dr-exemplars").addEventListener("click", (e) => {
+    if (e.target.dataset.action === "remove-exemplar") {
+      const row = e.target.closest(".exemplar-row");
+      row.remove();
+      saveExemplars();
+    }
+  });
+  document.getElementById("dr-exemplar-add").addEventListener("click", () => {
+    const list = document.getElementById("dr-exemplars");
+    const newIdx = list.querySelectorAll(".exemplar-row").length;
+    list.insertAdjacentHTML("beforeend", renderExemplarRow({ name: "", why: "" }, newIdx));
+    saveExemplars();
+    list.lastElementChild.querySelector(".exemplar-name").focus();
+  });
+
+  // Clients — per-row event handlers (each row has its own ID)
+  const clientsContainer = document.getElementById("dr-clients");
+
+  // Debounced text input — updates client on server
+  const debouncers = new WeakMap();
+  clientsContainer.addEventListener("input", (e) => {
+    const row = e.target.closest(".client-row");
+    if (!row) return;
+    const fieldName = e.target.classList.contains("client-name") ? "name"
+                    : e.target.classList.contains("client-note") ? "note" : null;
+    if (!fieldName) return;
+    // Debounce per-row
+    const prev = debouncers.get(row);
+    if (prev) clearTimeout(prev);
+    debouncers.set(row, setTimeout(() => persistClientRow(row), 350));
+    // Update local STATE immediately so the count/preview reflects this
+    syncClientRowToState(row);
+    renderGrid();
+    updateSessionStats();
+    updateClientCountInHeader();
+  });
+  clientsContainer.addEventListener("change", (e) => {
+    if (e.target.classList.contains("client-tier")) {
+      e.target.dataset.tier = e.target.value;
+      const row = e.target.closest(".client-row");
+      syncClientRowToState(row);
+      persistClientRow(row);
+      renderGrid();
+      updateSessionStats();
+    }
+  });
+  clientsContainer.addEventListener("click", async (e) => {
+    if (e.target.dataset.action === "remove-client") {
+      const row = e.target.closest(".client-row");
+      const cid = row.dataset.cid;
+      const tmpId = row.dataset.tmp;
+      row.remove();
+      // Remove from local STATE
+      const list = STATE.overlays[id] ? STATE.overlays[id].clients : [];
+      const idx = list.findIndex(c => (cid && c.id === cid) || (tmpId && c.tmpId === tmpId));
+      if (idx >= 0) list.splice(idx, 1);
+      // Remove from server (if it was ever saved)
+      if (cid) { try { await api("delete_client", { id: cid }); } catch {} }
+      renderGrid();
+      updateSessionStats();
+      updateClientCountInHeader();
+      // If empty, show the empty state
+      const remaining = document.querySelectorAll("#dr-clients .client-row").length;
+      if (remaining === 0) openDrawer(id);
+    }
+  });
+
+  document.getElementById("dr-client-add").addEventListener("click", () => {
+    const wrap = document.getElementById("dr-clients");
+    const empty = wrap.querySelector(".clients-empty");
+    if (empty) empty.remove();
+    const newIdx = wrap.querySelectorAll(".client-row").length;
+    const tmpId = "tmp-" + (++TMP_COUNTER);
+    wrap.insertAdjacentHTML("beforeend", renderClientRow({ id: null, tmpId, name: "", tier: "target", note: "" }, newIdx));
+    // Add to local STATE
+    if (!STATE.overlays[id]) STATE.overlays[id] = { priority: false, sessionNoteUser: "", clients: [], exemplars: null };
+    STATE.overlays[id].clients.push({ id: null, tmpId, name: "", tier: "target", note: "" });
+    wrap.lastElementChild.querySelector(".client-name").focus();
+    updateClientCountInHeader();
+  });
+
+  // Footer button — Reset (base) or Delete (user)
+  if (isUser) {
+    document.getElementById("dr-delete").addEventListener("click", async () => {
+      const u = STATE.userArchetypes.find(x => x.id === id);
+      const label = u && u.name ? `"${u.name}"` : id;
+      if (!confirm(`Delete archetype ${label}? This will also remove any clients mapped to it and any session edits for it. This cannot be undone.`)) return;
+      // Local removal
+      const idx = STATE.userArchetypes.findIndex(x => x.id === id);
+      if (idx >= 0) STATE.userArchetypes.splice(idx, 1);
+      delete STATE.overlays[id];
+      // Server — cascade delete
+      try { await api("delete_user_archetype", { id }); } catch {}
+      closeDrawer();
+      renderGrid();
+      updateSessionStats();
+      showToast("Archetype deleted");
+    });
+  } else {
+    document.getElementById("dr-reset").addEventListener("click", async () => {
+      if (confirm("Reset this archetype to its default content? Your edits to name, tagline, exemplars, clients, and notes for this archetype will be lost (across the whole workspace).")) {
+        // Local
+        STATE.overlays[id] = { priority: false, sessionNoteUser: "", clients: [], exemplars: null };
+        // Server
+        try { await api("reset_archetype", { archetype_id: id }); } catch {}
+        openDrawer(id);
+        renderGrid();
+        updateSessionStats();
+      }
+    });
+  }
+}
+
+// Sync a client-row DOM into local STATE (used by debounced/instant flows)
+function syncClientRowToState(row) {
+  if (!CURRENT_DRAWER_ID) return;
+  const cid = row.dataset.cid;
+  const tmpId = row.dataset.tmp;
+  const data = {
+    name: row.querySelector(".client-name").value,
+    tier: row.querySelector(".client-tier").value,
+    note: row.querySelector(".client-note").value,
+  };
+  const list = STATE.overlays[CURRENT_DRAWER_ID].clients;
+  const idx = list.findIndex(c => (cid && c.id === cid) || (tmpId && c.tmpId === tmpId));
+  if (idx >= 0) Object.assign(list[idx], data);
+}
+
+// Persist a single client row to the server (insert if new, update otherwise)
+async function persistClientRow(row) {
+  if (!CURRENT_DRAWER_ID) return;
+  const cid = row.dataset.cid;
+  const tmpId = row.dataset.tmp;
+  const data = {
+    name: row.querySelector(".client-name").value.trim(),
+    tier: row.querySelector(".client-tier").value,
+    note: row.querySelector(".client-note").value,
+  };
+  // Don't save empty placeholder rows (no name yet)
+  if (!data.name && !cid) return;
+
+  try {
+    if (cid) {
+      await api("update_client", { id: cid, ...data });
+    } else {
+      const res = await api("insert_client", { archetype_id: CURRENT_DRAWER_ID, ...data });
+      if (res.id) {
+        row.dataset.cid = res.id;
+        // Update STATE: swap tmpId for real id
+        const list = STATE.overlays[CURRENT_DRAWER_ID].clients;
+        const c = list.find(c => c.tmpId === tmpId);
+        if (c) { c.id = res.id; delete c.tmpId; }
+      }
+    }
+  } catch {
+    // Toast already shown by api()
+  }
+}
+
+function saveExemplars() {
+  const rows = document.querySelectorAll("#dr-exemplars .exemplar-row");
+  const exemplars = Array.from(rows).map(r => ({
+    name: r.querySelector(".exemplar-name").value,
+    why:  r.querySelector(".exemplar-why").value,
+  })).filter(e => e.name.trim() || e.why.trim());
+  // Stored as JSON in a single archetype_edits row
+  updateOverlay(CURRENT_DRAWER_ID, { exemplars });
+}
+
+function updateClientCountInHeader() {
+  const count = document.querySelectorAll("#dr-clients .client-row").length;
+  const el = document.querySelector(".drawer .clients-count");
+  if (el) el.textContent = `${count} mapped`;
+}
+
+function closeDrawer() {
+  const drawer = document.getElementById("drawer");
+  drawer.classList.remove("open");
+  drawer.classList.remove("module-drawer");
+  document.getElementById("drawer-backdrop").classList.remove("open");
+  document.body.style.overflow = "";
+  CURRENT_DRAWER_ID = null;
+  CURRENT_MODULE_DRAWER_ID = null;
+}
+
+document.getElementById("drawer-backdrop").addEventListener("click", closeDrawer);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && CURRENT_DRAWER_ID) closeDrawer();
+});
+
+// ============================================================
+// RIGHT TO WIN VIEW (Modules)
+// ============================================================
+function matchesModuleFilters(m) {
+  if (RTW_FILTERS.status.size && !RTW_FILTERS.status.has(m.status)) return false;
+  if (RTW_FILTERS.lever.size && !RTW_FILTERS.lever.has(m.primaryLever)) return false;
+  return true;
+}
+
+function renderRTW() {
+  const view = document.getElementById("rtw-view");
+  const all = getAllModules();
+  const liveCount  = all.filter(m => m.status === "live").length;
+  const buildCount = all.filter(m => m.status === "build").length;
+  const filtered = all.filter(matchesModuleFilters);
+
+  view.innerHTML = `
+    <div class="rtw-intro">
+      <div>
+        <h1>Clarynt's right to win <em>across the archetypes</em></h1>
+        <p class="byline">The modules behind every archetype proposition. Six live today, thirteen under build. Each card maps back to the archetypes it powers — that is the cross-cut that makes the joint Clarynt + PwC offer hard to replicate.</p>
+      </div>
+      <div class="rtw-stats">
+        <span class="num-live">${liveCount}</span> live<br>
+        <span class="num-build">${buildCount}</span> under build<br>
+        ${all.length} total modules
+      </div>
+    </div>
+
+    <div class="rtw-filters">
+      <div class="filter-group">
+        <span class="filter-label">Status</span>
+        <button class="chip rtw-chip" data-rtw="status" data-val="live"><span class="dot" style="background:var(--lev-prd)"></span>Live</button>
+        <button class="chip rtw-chip" data-rtw="status" data-val="build"><span class="dot" style="background:var(--marigold);opacity:0.6"></span>Under Build</button>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Lever</span>
+        ${Object.keys(LEVER_META).map(lv => `
+          <button class="chip rtw-chip" data-rtw="lever" data-val="${lv}">
+            <span class="dot" style="background:${LEVER_META[lv].color}"></span>${LEVER_META[lv].name}
+          </button>
+        `).join("")}
+      </div>
+      <a class="filter-reset" id="rtw-filter-reset">clear filters</a>
+    </div>
+
+    <div class="module-grid">
+      ${filtered.length === 0
+        ? `<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--ink-muted);">
+            <div style="font-family: var(--font-display); font-size: 18px; color: var(--ink); margin-bottom: 6px;">No modules match these filters</div>
+            <div style="font-size: 13px; font-style: italic;">Try clearing one or more filters above</div>
+          </div>`
+        : filtered.map(m => renderModuleCard(m)).join("")}
+    </div>
+  `;
+
+  // Filter chips
+  view.querySelectorAll(".rtw-chip").forEach(chip => {
+    const f = chip.dataset.rtw, v = chip.dataset.val;
+    if (RTW_FILTERS[f].has(v)) chip.classList.add("active");
+    chip.addEventListener("click", () => {
+      if (RTW_FILTERS[f].has(v)) RTW_FILTERS[f].delete(v);
+      else RTW_FILTERS[f].add(v);
+      renderRTW();
+    });
+  });
+  view.querySelector("#rtw-filter-reset").addEventListener("click", (e) => {
+    e.preventDefault();
+    RTW_FILTERS.status.clear();
+    RTW_FILTERS.lever.clear();
+    renderRTW();
+  });
+
+  // Card clicks open module drawer
+  view.querySelectorAll(".module-card").forEach(card => {
+    card.addEventListener("click", (e) => {
+      // Archetype mini chips — jump back to archetype drawer
+      const mini = e.target.closest(".archetype-mini");
+      if (mini) {
+        e.stopPropagation();
+        switchView("grid");
+        setTimeout(() => openDrawer(mini.dataset.archId), 80);
+        return;
+      }
+      openModuleDrawer(card.dataset.id);
+    });
+  });
+}
+
+function renderModuleCard(m) {
+  const statusLabel = m.status === "live" ? "Live" : "Under Build";
+  const lev = LEVER_META[m.primaryLever];
+  return `
+    <article class="module-card" data-id="${m.id}" data-status="${m.status}">
+      <div class="module-header">
+        <div class="module-name">${escapeHtml(m.name)}</div>
+        <span class="status-badge" data-status="${m.status}">${statusLabel}</span>
+      </div>
+      <div class="module-value-prop">${escapeHtml(m.valueProp)}</div>
+      <div class="module-meta">
+        <div class="module-meta-row">
+          <span>Primary lever</span>
+          <span class="lever-pill" style="background:${lev.color}">${m.primaryLever}</span>
+          <span style="color: var(--ink-faint); text-transform: none; letter-spacing: 0; font-weight: 400; font-size: 11px;">${lev.name}</span>
+        </div>
+        <div class="module-meta-row" style="flex-wrap:wrap; gap: 4px;">
+          <span style="margin-right:4px">Powers</span>
+          ${m.archetypes.length === 0
+            ? `<span style="color: var(--ink-faint); text-transform: none; letter-spacing: 0; font-style: italic; font-weight: 400;">cross-cutting · no single archetype</span>`
+            : m.archetypes.map(aid => {
+                const a = getArchetype(aid);
+                return `<span class="archetype-mini" data-arch-id="${aid}" title="${escapeAttr(a.name)}"><span class="lev-dot" style="background:${LEVER_META[a.lever].color}"></span>${aid}</span>`;
+              }).join("")}
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+// ============================================================
+// MODULE DRAWER
+// ============================================================
+let CURRENT_MODULE_DRAWER_ID = null;
+
+function openModuleDrawer(id) {
+  CURRENT_MODULE_DRAWER_ID = id;
+  CURRENT_DRAWER_ID = null; // make sure archetype-drawer handlers don't conflict
+  const m = getModule(id);
+  const statusLabel = m.status === "live" ? "Live" : "Under Build";
+
+  const drawer = document.getElementById("drawer");
+  drawer.classList.add("module-drawer");
+  drawer.innerHTML = `
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">
+          <span class="drawer-id">MODULE</span>
+          <span class="status-badge" data-status="${m.status}">${statusLabel}</span>
+        </div>
+        <input class="drawer-name" id="mdr-name" value="${escapeAttr(m.name)}" />
+        <div style="display:flex; gap: 10px; align-items: center; margin-top: 10px;">
+          <span style="font-family: var(--font-mono); font-size: 10px; color: var(--ink-faint); letter-spacing: 0.04em;">${m.id}</span>
+          <span style="color: var(--ink-faint); font-size: 10px;">·</span>
+          <span style="font-size: 10px; color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600;">
+            Primary lever
+          </span>
+          <span class="lever-pill" style="background:${LEVER_META[m.primaryLever].color}">${m.primaryLever}</span>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:12px;">
+        <button class="drawer-close" id="mdr-close">${XICON}</button>
+        <div class="status-toggle">
+          <button data-status="live"  class="${m.status === "live"  ? "active" : ""}">LIVE</button>
+          <button data-status="build" class="${m.status === "build" ? "active" : ""}">BUILD</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-body">
+
+      <section class="section">
+        <div class="section-label editable"><span class="marker"></span>Value proposition — editable</div>
+        <textarea class="module-value-prop-edit" id="mdr-valueprop">${escapeHtml(m.valueProp)}</textarea>
+      </section>
+
+      <section class="section">
+        <div class="section-label"><span class="marker"></span>Architecture position</div>
+        <div class="attribute-grid">
+          <div class="attribute-cell">
+            <div class="attribute-name">Module ID</div>
+            <div class="attribute-value" style="font-family: var(--font-mono); font-size: 12px;">${m.id}</div>
+          </div>
+          <div class="attribute-cell">
+            <div class="attribute-name">Primary lever</div>
+            <div class="attribute-value">${LEVER_META[m.primaryLever].name} (${m.primaryLever})</div>
+          </div>
+          <div class="attribute-cell">
+            <div class="attribute-name">Status</div>
+            <div class="attribute-value">${statusLabel}</div>
+          </div>
+          <div class="attribute-cell">
+            <div class="attribute-name">Powers archetypes</div>
+            <div class="attribute-value">${m.archetypes.length} of ${getAllArchetypes().length}</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-label"><span class="marker"></span>Archetypes this module powers</div>
+        ${m.archetypes.length === 0
+          ? `<div style="padding: 16px; color: var(--ink-muted); font-style: italic; font-size: 13px; background: var(--card-soft); border: 1px solid var(--rule); border-radius: 2px;">This module is cross-cutting — it informs the platform broadly rather than mapping cleanly to a specific archetype.</div>`
+          : `<div style="display: flex; flex-wrap: wrap; gap: 6px;">
+              ${m.archetypes.map(aid => {
+                const a = getArchetype(aid);
+                return `<button class="module-cross-link" data-arch-id="${aid}">
+                  <span class="lev-dot" style="background:${LEVER_META[a.lever].color}"></span>
+                  <span class="code">${aid}</span>
+                  ${escapeHtml(a.name)}
+                </button>`;
+              }).join("")}
+            </div>`
+        }
+      </section>
+
+      <section class="section">
+        <div class="section-label editable"><span class="marker"></span>Notes</div>
+        <textarea class="session-notes-area" id="mdr-note" placeholder="Use this for status nuance, client conversations involving this module, or refinements to the value prop...">${escapeHtml(m.note)}</textarea>
+      </section>
+
+      <div class="drawer-footer-actions">
+        <button class="btn btn-warn" id="mdr-reset">Reset this module to default</button>
+      </div>
+
+    </div>
+  `;
+
+  drawer.classList.add("open");
+  document.getElementById("drawer-backdrop").classList.add("open");
+  document.body.style.overflow = "hidden";
+
+  attachModuleDrawerHandlers();
+}
+
+function attachModuleDrawerHandlers() {
+  document.getElementById("mdr-close").addEventListener("click", closeDrawer);
+
+  document.getElementById("mdr-name").addEventListener("input", (e) => {
+    updateModuleOverlay(CURRENT_MODULE_DRAWER_ID, { name: e.target.value });
+  });
+  document.getElementById("mdr-valueprop").addEventListener("input", (e) => {
+    updateModuleOverlay(CURRENT_MODULE_DRAWER_ID, { valueProp: e.target.value });
+  });
+  document.getElementById("mdr-note").addEventListener("input", (e) => {
+    updateModuleOverlay(CURRENT_MODULE_DRAWER_ID, { note: e.target.value });
+  });
+
+  // Status toggle
+  document.querySelectorAll(".module-drawer .status-toggle button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      updateModuleOverlay(CURRENT_MODULE_DRAWER_ID, { status: btn.dataset.status });
+      openModuleDrawer(CURRENT_MODULE_DRAWER_ID); // re-render drawer
+      renderRTW(); // re-render grid
+    });
+  });
+
+  // Cross-links to archetypes
+  document.querySelectorAll(".module-drawer .module-cross-link, .module-drawer .archetype-mini").forEach(link => {
+    link.addEventListener("click", () => {
+      const archId = link.dataset.archId;
+      closeDrawer();
+      setTimeout(() => {
+        switchView("grid");
+        setTimeout(() => openDrawer(archId), 100);
+      }, 250);
+    });
+  });
+
+  document.getElementById("mdr-reset").addEventListener("click", async () => {
+    if (confirm("Reset this module to default? Your edits to its name, status, value prop, and notes will be lost (across the whole workspace).")) {
+      STATE.moduleOverlays[CURRENT_MODULE_DRAWER_ID] = { note: "" };
+      try { await api("reset_module", { module_id: CURRENT_MODULE_DRAWER_ID }); } catch {}
+      openModuleDrawer(CURRENT_MODULE_DRAWER_ID);
+      renderRTW();
+    }
+  });
+}
+
+// ============================================================
+// MAPPINGS VIEW
+// ============================================================
+function renderMappings() {
+  const view = document.getElementById("mappings-view");
+  const allMappings = [];
+  getAllArchetypes().forEach(a => {
+    a.clients.forEach(c => {
+      allMappings.push({ ...c, archetype: a });
+    });
+  });
+
+  if (allMappings.length === 0) {
+    view.innerHTML = `
+      <div class="mappings-empty">
+        <div class="mappings-empty-title">No client mappings yet</div>
+        <div class="mappings-empty-sub">Open any archetype and add clients. They will appear here as a cross-cut view.</div>
+      </div>
+    `;
+    return;
+  }
+
+  // Sort: priority archetype first, then by tier (current, target, aspirational), then by client name
+  const tierOrder = { current: 0, target: 1, aspirational: 2 };
+  allMappings.sort((a, b) => {
+    if (a.archetype.priority !== b.archetype.priority) return a.archetype.priority ? -1 : 1;
+    const ta = tierOrder[a.tier || "target"], tb = tierOrder[b.tier || "target"];
+    if (ta !== tb) return ta - tb;
+    return a.name.localeCompare(b.name);
+  });
+
+  view.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:end; margin-bottom: 20px;">
+      <h2 style="font-family: var(--font-display); font-weight: 500; font-size: 28px; letter-spacing: -0.01em;">Client mappings <em style="font-style:italic; color: var(--rose); font-weight: 400;">across all archetypes</em></h2>
+      <div style="font-size: 12px; color: var(--ink-muted); letter-spacing: 0.04em; text-transform: uppercase;">${allMappings.length} mapping${allMappings.length === 1 ? "" : "s"} · ${new Set(allMappings.map(m => m.name)).size} unique client${new Set(allMappings.map(m => m.name)).size === 1 ? "" : "s"}</div>
+    </div>
+    <div class="mappings-table">
+      <div class="mappings-row header">
+        <div>Client</div>
+        <div>Archetype</div>
+        <div>Tier</div>
+        <div>Note</div>
+        <div></div>
+      </div>
+      ${allMappings.map(m => `
+        <div class="mappings-row">
+          <div class="mapping-client">${escapeHtml(m.name)}</div>
+          <div class="mapping-archetype">
+            <span class="lever-dot" style="background:${LEVER_META[m.archetype.lever].color}"></span>
+            <span class="code">${m.archetype.id}</span>${escapeHtml(m.archetype.name)}
+          </div>
+          <div class="mapping-tier" data-tier="${m.tier || "target"}">${m.tier || "target"}</div>
+          <div class="mapping-note">${escapeHtml(m.note || "")}</div>
+          <button class="mapping-jump" data-jump="${m.archetype.id}">edit →</button>
+        </div>
+      `).join("")}
+    </div>
+  `;
+
+  view.querySelectorAll(".mapping-jump").forEach(btn => {
+    btn.addEventListener("click", () => {
+      switchView("grid");
+      setTimeout(() => openDrawer(btn.dataset.jump), 50);
+    });
+  });
+}
+
+// ============================================================
+// VIEW SWITCHING
+// ============================================================
+function switchView(view) {
+  // RTW is a top-level mode — distinct from grid/mappings/session
+  const isRTW = view === "rtw";
+  document.querySelectorAll(".view-btn").forEach(b => {
+    b.classList.toggle("active", !isRTW && b.dataset.view === view);
+  });
+  document.getElementById("grid-view").style.display     = (!isRTW && (view === "grid" || view === "session")) ? "" : "none";
+  document.getElementById("mappings-view").style.display = (!isRTW && view === "mappings") ? "" : "none";
+  document.getElementById("rtw-view").style.display      = isRTW ? "" : "none";
+  document.body.classList.toggle("session-mode", !isRTW && view === "session");
+  document.body.classList.toggle("mappings-mode", !isRTW && view === "mappings");
+  document.body.classList.toggle("rtw-mode", isRTW);
+
+  // Sector tab active state
+  document.querySelectorAll(".sector-tabs .tab").forEach(t => {
+    if (t.dataset.sector === "fmcg") t.classList.toggle("active", !isRTW);
+    if (t.dataset.sector === "rtw")  t.classList.toggle("active", isRTW);
+  });
+
+  if (view === "mappings") renderMappings();
+  if (view === "session") updateSessionStats();
+  if (isRTW) renderRTW();
+}
+
+document.querySelectorAll(".view-btn").forEach(b => {
+  b.addEventListener("click", () => switchView(b.dataset.view));
+});
+
+// Sector tabs — only FMCG and RTW are active
+document.querySelectorAll(".sector-tabs .tab").forEach(t => {
+  if (t.classList.contains("disabled")) return;
+  t.addEventListener("click", () => {
+    const sector = t.dataset.sector;
+    if (sector === "rtw") switchView("rtw");
+    else if (sector === "fmcg") switchView("grid");
+  });
+});
+
+function updateSessionStats() {
+  const all = getAllArchetypes();
+  document.getElementById("ss-priority").textContent = all.filter(a => a.priority).length;
+  document.getElementById("ss-clients").textContent = all.reduce((sum, a) => sum + a.clients.length, 0);
+  document.getElementById("ss-archetypes").textContent = all.length;
+}
+
+// ============================================================
+// EXPORT / RESET
+// ============================================================
+document.getElementById("export-json").addEventListener("click", () => {
+  const data = {
+    exportedAt: new Date().toISOString(),
+    sector: "FMCG",
+    archetypes: getAllArchetypes().map(a => ({
+      id: a.id, name: a.name, tagline: a.tagline, lever: a.lever,
+      priority: a.priority,
+      exemplars: a.exemplars,
+      clients: a.clients,
+      sessionNoteUser: a.sessionNoteUser,
+    })),
+    modules: getAllModules().map(m => ({
+      id: m.id, name: m.name, status: m.status, layer: m.layer,
+      primaryLever: m.primaryLever, valueProp: m.valueProp,
+      archetypes: m.archetypes, note: m.note,
+    })),
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `clarynt-pwc-fmcg-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast("JSON exported");
+});
+
+document.getElementById("export-summary").addEventListener("click", () => {
+  const all = getAllArchetypes();
+  const priorities = all.filter(a => a.priority);
+  const mapped = all.filter(a => a.clients.length > 0);
+
+  const win = window.open("", "_blank");
+  win.document.write(`<!DOCTYPE html>
+<html><head><title>Clarynt × PwC — FMCG Archetype Session Summary</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 40px; color: #1a1a1a; line-height: 1.55; }
+  h1 { font-size: 28px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 4px; }
+  h1 em { color: #E8185A; }
+  h2 { font-size: 18px; font-weight: 600; margin-top: 36px; margin-bottom: 12px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 24px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .archetype { margin-bottom: 22px; padding-left: 16px; border-left: 3px solid #E89522; }
+  .archetype.priority { border-left-color: #E8185A; }
+  .archetype h3 { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
+  .archetype .code { color: #888; font-family: monospace; font-size: 11px; margin-right: 6px; }
+  .archetype .tag { color: #E8185A; font-style: italic; font-size: 13px; margin-bottom: 6px; }
+  .archetype .clients { font-size: 13px; color: #4a4a4a; }
+  .archetype .clients li { margin: 3px 0; }
+  .archetype .note { margin-top: 6px; font-size: 12px; color: #666; font-style: italic; padding: 8px 12px; background: #faf5ec; }
+  @media print { body { padding: 0; } @page { margin: 1.5cm; } }
+</style></head><body>
+  <h1>FMCG archetype framework — <em>session output</em></h1>
+  <div class="meta">Clarynt × PwC · Generated ${new Date().toLocaleString()} · ${priorities.length} prioritised · ${mapped.length} with client mappings</div>
+  ${priorities.length ? `<h2>Prioritised archetypes (${priorities.length})</h2>` + priorities.map(a => archetypeBlock(a, true)).join("") : ""}
+  ${mapped.filter(a => !a.priority).length ? `<h2>Other archetypes with mapped clients</h2>` + mapped.filter(a => !a.priority).map(a => archetypeBlock(a, false)).join("") : ""}
+  ${(!priorities.length && !mapped.length) ? `<p style="color:#888; font-style:italic;">No archetypes have been prioritised or mapped yet. Mark archetypes as priority and add clients from the grid view, then return here to print the session summary.</p>` : ""}
+  <script>setTimeout(() => window.print(), 600);<\/script>
+</body></html>`);
+  function archetypeBlock(a, priority) {
+    return `<div class="archetype ${priority ? "priority" : ""}">
+      <h3><span class="code">${a.id}</span>${a.name}</h3>
+      <div class="tag">${a.tagline}</div>
+      ${a.clients.length ? `<div class="clients"><strong>Clients:</strong><ul>${a.clients.map(c => `<li>${c.name} <em style="color:#888">— ${c.tier}${c.note ? `; ${c.note}` : ""}</em></li>`).join("")}</ul></div>` : ""}
+      ${a.sessionNoteUser ? `<div class="note">${a.sessionNoteUser}</div>` : ""}
+    </div>`;
+  }
+  win.document.close();
+});
+
+document.getElementById("reset-all").addEventListener("click", async () => {
+  if (confirm("Reset ALL edits across the entire shared workspace? This cannot be undone — every user's clients, priorities, custom exemplars, and notes will be cleared.")) {
+    STATE = emptyState();
+    try { await api("reset_all", {}); } catch {}
+    renderGrid();
+    renderRTW();
+    updateSessionStats();
+    showToast("Workspace reset");
+  }
+});
+
+// ============================================================
+// ICONS
+// ============================================================
+const STAR_OUTLINE = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M8 1.5l1.85 4.2 4.55.4-3.4 3.1 1 4.5L8 11.5 3.99 13.7l1-4.5-3.4-3.1 4.55-.4z"/></svg>`;
+const STAR_FILLED  = `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5l1.85 4.2 4.55.4-3.4 3.1 1 4.5L8 11.5 3.99 13.7l1-4.5-3.4-3.1 4.55-.4z"/></svg>`;
+const XICON        = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg>`;
+
+// ============================================================
+// UTILS
+// ============================================================
+function escapeHtml(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+}
+function escapeAttr(s) { return escapeHtml(s); }
+
+// ============================================================
+// SETUP FLOW (first-load: ask for URL + name)
+// ============================================================
+function showSetup(reconfigure = false) {
+  const overlay = document.getElementById("setup-overlay");
+  const urlField = document.getElementById("setup-url-field");
+  const urlInput = document.getElementById("setup-url");
+  const nameInput = document.getElementById("setup-name");
+  const errEl = document.getElementById("setup-error");
+  const reconfigureBtn = document.getElementById("setup-reconfigure");
+
+  // Pre-fill from existing settings
+  if (SETTINGS.appsScriptUrl) urlInput.value = SETTINGS.appsScriptUrl;
+  if (SETTINGS.userName) nameInput.value = SETTINGS.userName;
+
+  // If we already have a URL and just need a name, hide the URL field
+  if (!reconfigure && SETTINGS.appsScriptUrl && !SETTINGS.userName) {
+    urlField.style.display = "none";
+    document.getElementById("setup-title").textContent = "Who's editing?";
+    document.getElementById("setup-subtitle").textContent = "Workspace is set up. Just tell us your name for attribution.";
+    reconfigureBtn.style.display = "inline-block";
+  } else {
+    urlField.style.display = "block";
+    document.getElementById("setup-title").textContent = SETTINGS.appsScriptUrl ? "Update workspace settings" : "Sign in to the joint workspace";
+    document.getElementById("setup-subtitle").textContent = "One-time setup. Your edits will sync live with everyone else in the workspace.";
+    reconfigureBtn.style.display = "none";
+  }
+  errEl.style.display = "none";
+  overlay.style.display = "flex";
+  setTimeout(() => (urlField.style.display === "none" ? nameInput : urlInput).focus(), 100);
+}
+
+function hideSetup() {
+  document.getElementById("setup-overlay").style.display = "none";
+}
+
+document.getElementById("setup-reconfigure").addEventListener("click", () => {
+  document.getElementById("setup-url-field").style.display = "block";
+  document.getElementById("setup-reconfigure").style.display = "none";
+  document.getElementById("setup-title").textContent = "Update workspace settings";
+});
+
+document.getElementById("setup-submit").addEventListener("click", async () => {
+  const url = document.getElementById("setup-url").value.trim();
+  const name = document.getElementById("setup-name").value.trim();
+  const errEl = document.getElementById("setup-error");
+  const btn = document.getElementById("setup-submit");
+
+  if (!url) {
+    errEl.textContent = "Please paste the Apps Script Web App URL.";
+    errEl.style.display = "block";
+    return;
+  }
+  if (!/^https:\/\/script\.google(usercontent)?\.com\//.test(url)) {
+    errEl.textContent = "That doesn't look like an Apps Script URL. It should start with https://script.google.com/macros/...";
+    errEl.style.display = "block";
+    return;
+  }
+  if (!name) {
+    errEl.textContent = "Please enter your name for attribution.";
+    errEl.style.display = "block";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Connecting…";
+  errEl.style.display = "none";
+
+  // Try to fetch to verify the URL works
+  SETTINGS.appsScriptUrl = url;
+  SETTINGS.userName = name;
+  saveSettings();
+
+  try {
+    const data = await fetchAllFromSheet();
+    applyServerData(data);
+    hideSetup();
+    renderGrid();
+    updateSessionStats();
+    startPolling();
+  } catch (err) {
+    errEl.textContent = "Could not connect: " + err.message + ". Check the URL and that the Apps Script is deployed with 'Anyone' access.";
+    errEl.style.display = "block";
+    btn.disabled = false;
+    btn.textContent = "Continue";
+  }
+});
+
+// ============================================================
+// POLLING
+// ============================================================
+function startPolling() {
+  if (POLL_TIMER) clearInterval(POLL_TIMER);
+  POLL_TIMER = setInterval(async () => {
+    // Skip a poll if there's an in-flight write or a focused field
+    if (PENDING_WRITES > 0) return;
+    if (document.activeElement && document.activeElement.matches("input, textarea")) {
+      // Skip — user is typing
+      return;
+    }
+    try {
+      const data = await fetchAllFromSheet();
+      const hadChange = applyAndDetectChange(data);
+      if (hadChange) {
+        renderGrid();
+        // Refresh whatever view is active
+        if (document.body.classList.contains("mappings-mode")) renderMappings();
+        if (document.body.classList.contains("rtw-mode")) renderRTW();
+        updateSessionStats();
+        // If a drawer is open, refresh it too
+        if (CURRENT_DRAWER_ID && !document.activeElement.closest(".drawer input, .drawer textarea")) {
+          openDrawer(CURRENT_DRAWER_ID);
+        }
+      }
+    } catch {
+      // setConnectionState('disconnected') already done in fetch
+    }
+  }, POLL_INTERVAL_MS);
+}
+
+// Quick deep-equality between server snapshot and current STATE to skip re-renders
+function applyAndDetectChange(serverData) {
+  const before = JSON.stringify(STATE);
+  applyServerData(serverData);
+  const after = JSON.stringify(STATE);
+  return before !== after;
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+attachFilterHandlers();
+
+// If we have URL + name, fetch and render. Otherwise show setup.
+if (SETTINGS.appsScriptUrl && SETTINGS.userName) {
+  setConnectionState("connecting");
+  fetchAllFromSheet()
+    .then(data => {
+      applyServerData(data);
+      renderGrid();
+      updateSessionStats();
+      startPolling();
+    })
+    .catch(err => {
+      console.error("Initial fetch failed:", err);
+      // Still show the UI but in disconnected state
+      renderGrid();
+      updateSessionStats();
+      // Open the setup overlay so the user can reconfigure
+      showSetup(true);
+    });
+} else {
+  // First-time setup — show overlay
+  renderGrid(); // Render empty UI behind the overlay
+  updateSessionStats();
+  showSetup();
+}
+
+</script>
+</body>
+</html>
