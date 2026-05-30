@@ -1,7 +1,7 @@
-# Clarynt × PwC GTM Archetypes Workspace
+# Clarynt GTM Archetypes Workspace
 
 A live, multi-user workspace for working through FMCG growth archetypes
-in joint Clarynt + PwC sessions.
+in joint Clarynt sessions.
 
 ## Live site
 
